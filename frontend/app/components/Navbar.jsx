@@ -13,7 +13,7 @@ export default function Navbar() {
     return (
         <div className={dark ? "dark" : ""}>
             <nav
-                className="w-full flex justify-between items-center px-6 py-4 backdrop-blur-xl bg-gray-950 border-b border-white/10 text-white">
+                className={`w-full flex justify-between items-center px-6 py-4 backdrop-blur-xl bg-gray-950 border-b border-white/10 text-white transition-all ${dark ? "bg-gray-950 text-white" : "bg-gray-100 text-black"}`}>
                 {/* LEFT SIDE */}
                 <div className="flex items-center gap-6">
                     {/* LOGO - hidden on small screens */}
