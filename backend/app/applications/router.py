@@ -17,7 +17,7 @@ from .schema import (
 router = APIRouter(prefix="/applications", tags=["Applications"])
 
 
-@router.get("/applications", response_model=ApplicationListResponse)
+@router.get("/", response_model=ApplicationListResponse)
 def get_applications(
         skip: int = 0,
         limit: int = 100,
@@ -36,7 +36,7 @@ def get_applications(
     return {"success": True, "data": applications, "total": len(applications)}
 
 
-@router.get("/applications/{application_id}", response_model=ApplicationWithDetailsResponse)
+@router.get("/{application_id}", response_model=ApplicationWithDetailsResponse)
 def get_application(application_id: int, db: Session = Depends(get_db)):
     apps = ApplicationService.get_applications_with_details(
         db, limit=1, application_id=application_id
@@ -46,7 +46,7 @@ def get_application(application_id: int, db: Session = Depends(get_db)):
     return {"success": True, "data": apps[0]}
 
 
-@router.post("/applications", response_model=ApplicationResponse, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=ApplicationResponse, status_code=status.HTTP_201_CREATED)
 def create_application(application: ApplicationCreate, db: Session = Depends(get_db)):
     if not ApplicationService.can_apply_to_event(db, application.user_id, application.event_id):
         raise HTTPException(
@@ -59,7 +59,7 @@ def create_application(application: ApplicationCreate, db: Session = Depends(get
     return {"success": True, "data": db_app}
 
 
-@router.put("/applications/{application_id}", response_model=ApplicationResponse)
+@router.put("/{application_id}", response_model=ApplicationResponse)
 def update_application_status(application_id: int, application_update: ApplicationUpdate,
                               db: Session = Depends(get_db)):
     if not application_update.status:
@@ -70,7 +70,7 @@ def update_application_status(application_id: int, application_update: Applicati
     return {"success": True, "data": db_app}
 
 
-@router.post("/applications/{application_id}/accept", response_model=ApplicationResponse)
+@router.post("/{application_id}/accept", response_model=ApplicationResponse)
 def accept_application(application_id: int, db: Session = Depends(get_db)):
     db_app = ApplicationService.accept_application(db, application_id)
     if not db_app:
@@ -78,7 +78,7 @@ def accept_application(application_id: int, db: Session = Depends(get_db)):
     return {"success": True, "data": db_app}
 
 
-@router.post("/applications/{application_id}/reject", response_model=ApplicationResponse)
+@router.post("/{application_id}/reject", response_model=ApplicationResponse)
 def reject_application(application_id: int, db: Session = Depends(get_db)):
     db_app = ApplicationService.reject_application(db, application_id)
     if not db_app:
@@ -86,7 +86,7 @@ def reject_application(application_id: int, db: Session = Depends(get_db)):
     return {"success": True, "data": db_app}
 
 
-@router.post("/applications/{application_id}/complete", response_model=ApplicationResponse)
+@router.post("/{application_id}/complete", response_model=ApplicationResponse)
 def complete_application(application_id: int, db: Session = Depends(get_db)):
     db_app = ApplicationService.complete_application(db, application_id)
     if not db_app:
@@ -94,7 +94,7 @@ def complete_application(application_id: int, db: Session = Depends(get_db)):
     return {"success": True, "data": db_app}
 
 
-@router.post("/applications/{application_id}/no-show", response_model=ApplicationResponse)
+@router.post("/{application_id}/no-show", response_model=ApplicationResponse)
 def mark_no_show(application_id: int, db: Session = Depends(get_db)):
     db_app = ApplicationService.mark_no_show(db, application_id)
     if not db_app:
@@ -102,7 +102,7 @@ def mark_no_show(application_id: int, db: Session = Depends(get_db)):
     return {"success": True, "data": db_app}
 
 
-@router.delete("/applications/{application_id}")
+@router.delete("/{application_id}")
 def delete_application(application_id: int, db: Session = Depends(get_db)):
     success = ApplicationService.delete_application(db, application_id)
     if not success:
@@ -123,8 +123,8 @@ def get_event_applications_count(event_id: int, db: Session = Depends(get_db)):
             "data": {"event_id": event_id, "total_applications": total, "accepted_applications": accepted}}
 
 
-@router.get("/applications/check-eligibility")
-def check_application_eligibility(user_id: str = Query(...), event_id: str = Query(...), db: Session = Depends(get_db)):
+@router.get("/check-eligibility")
+def check_application_eligibility(user_id: int = Query(...), event_id: int = Query(...), db: Session = Depends(get_db)):
     print(user_id, event_id)
     can_apply = ApplicationService.can_apply_to_event(db, user_id, event_id)
     return {"success": True, "data": {"user_id": user_id, "event_id": event_id, "can_apply": can_apply}}
