@@ -1,0 +1,55 @@
+from pydantic import BaseModel, validator
+from datetime import datetime
+from typing import Optional, List
+from enum import Enum
+
+class ApplicationStatus(str, Enum):
+    PENDING = "pending"
+    ACCEPTED = "accepted"
+    REJECTED = "rejected"
+    COMPLETED = "completed"
+    NO_SHOW = "no_show"
+
+class ApplicationBase(BaseModel):
+    status: ApplicationStatus = ApplicationStatus.PENDING
+
+class ApplicationCreate(BaseModel):
+    user_id: int
+    opportunity_id: int
+
+class ApplicationUpdate(BaseModel):
+    status: Optional[ApplicationStatus] = None
+
+class ApplicationInDB(ApplicationBase):
+    id: int
+    user_id: int
+    opportunity_id: int
+    applied_at: datetime
+    updated_at: datetime
+
+    class Config:
+        orm_mode = True
+
+class ApplicationWithDetails(ApplicationInDB):
+    user_name: str
+    user_email: str
+    opportunity_title: str
+    organization_name: str
+    opportunity_final_points: int
+
+class ApplicationResponse(BaseModel):
+    success: bool
+    data: ApplicationInDB
+
+class ApplicationWithDetailsResponse(BaseModel):
+    success: bool
+    data: ApplicationWithDetails
+
+class ApplicationListResponse(BaseModel):
+    success: bool
+    data: List[ApplicationWithDetails]
+    total: int
+
+class ApplicationStatsResponse(BaseModel):
+    success: bool
+    data: dict
