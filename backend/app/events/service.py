@@ -84,7 +84,7 @@ class EventService:
         for k, v in update_data.items():
             setattr(event, k, v)
 
-        event.updated_at = datetime.utcnow()
+        event.updated_at = datetime.now()
         db.commit()
         db.refresh(event)
         return event
@@ -106,7 +106,7 @@ class EventService:
             return None
 
         event.status = EventStatus.CLOSED
-        event.updated_at = datetime.utcnow()
+        event.updated_at = datetime.now()
         db.commit()
         db.refresh(event)
         return event
@@ -118,7 +118,7 @@ class EventService:
             .filter(
                 and_(
                     Event.status == EventStatus.OPEN,
-                    Event.date_start > datetime.utcnow(),
+                    Event.date_start > datetime.now(),
                 )
             )
             .order_by(Event.date_start.asc())
