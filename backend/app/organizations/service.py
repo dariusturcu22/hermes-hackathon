@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from backend.app.organizations.model import Organization
-from backend.app.organizations.schema import OrganizationCreate, OrganizationUpdate
+from ..organizations.model import Organization
+from ..organizations.schema import OrganizationCreate, OrganizationUpdate
 
 
 class OrganizationService:

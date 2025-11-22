@@ -1,13 +1,13 @@
 from sqlalchemy.orm import Session
-from sqlalchemy import and_, or_, func, desc
+from sqlalchemy import and_, func, desc
 from typing import List, Optional, Tuple
 from datetime import datetime
 
-from backend.app.applications.model import Application
-from backend.app.applications.schema import ApplicationCreate, ApplicationUpdate, ApplicationStatus
-from backend.app.users.model import User
-from backend.app.events.model import Opportunity
-from backend.app.organizations.model import Organization
+from ..applications.model import Application
+from ..applications.schema import ApplicationCreate, ApplicationStatus
+from ..users.model import User
+from ..events.model import Event
+from ..organizations.model import Organization
 
 
 class ApplicationService:
@@ -51,15 +51,15 @@ class ApplicationService:
             Application,
             User.name.label('user_name'),
             User.email.label('user_email'),
-            Opportunity.title.label('opportunity_title'),
+            Event.title.label('opportunity_title'),
             Organization.name.label('organization_name'),
-            Opportunity.final_points.label('opportunity_final_points')
+            Event.final_points.label('opportunity_final_points')
         ).join(
             User, Application.user_id == User.id
         ).join(
-            Opportunity, Application.opportunity_id == Opportunity.id
+            Event, Application.opportunity_id == Event.id
         ).join(
-            Organization, Opportunity.organization_id == Organization.id
+            Organization, Event.organization_id == Organization.id
         )
 
         if user_id:
@@ -79,12 +79,9 @@ class ApplicationService:
         # Convert to list of dictionaries for easier serialization
         applications_with_details = []
         for application, user_name, user_email, opp_title, org_name, final_points in results:
-            application_dict = {**application.__dict__}
-            application_dict['user_name'] = user_name
-            application_dict['user_email'] = user_email
-            application_dict['opportunity_title'] = opp_title
-            application_dict['organization_name'] = org_name
-            application_dict['opportunity_final_points'] = final_points
+            application_dict = {**application.__dict__, 'user_name': user_name, 'user_email': user_email,
+                                'opportunity_title': opp_title, 'organization_name': org_name,
+                                'opportunity_final_points': final_points}
             applications_with_details.append(application_dict)
 
         return applications_with_details
@@ -102,7 +99,7 @@ class ApplicationService:
         if existing_application:
             return None  # Application already exists
 
-        db_application = Application(**application.dict())
+        db_application = Application(**application.model_dump())
 
         db.add(db_application)
         db.commit()
@@ -219,7 +216,7 @@ class ApplicationService:
             return False
 
         # Check if opportunity is open and not full
-        opportunity = db.query(Opportunity).filter(Opportunity.id == opportunity_id).first()
+        opportunity = db.query(Event).filter(Event.id == opportunity_id).first()
         if not opportunity or opportunity.status != "open":
             return False
 
