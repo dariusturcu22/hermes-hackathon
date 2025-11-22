@@ -1,5 +1,5 @@
 ### Check if user can apply to an event
-GET http://localhost:8000/applications/check-eligibility?user_id=12&event_id=12
+GET http://localhost:8000/applications/check-eligibility?user_id=1&event_id=1
 
 
 ### Create a new application (volunteer applies to event)
