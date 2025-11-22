@@ -20,7 +20,7 @@ export default function Navbar() {
                     {/* LOGO - hidden on small screens */}
                     <div className="font-bold text-xl tracking-tight hidden lg:block">name</div>
 
-                    <div className="font-bold text-xl tracking-tight">name</div>
+
 
                     <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition">
                         <Home className="w-5 h-5"/>
