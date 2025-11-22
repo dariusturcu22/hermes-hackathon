@@ -9,7 +9,6 @@ def create_user(user: UserCreate, db: Session):
     if db_user:
         raise HTTPException(status_code=400, detail="auth0_id already registered")
 
-    # new_user = UserInDB(user.auth0_id, user.name, user.email, user.role, user.total_points, )
     db.add(user)
     db.commit()
     db.refresh(user)
@@ -29,7 +28,7 @@ def update_user(user_id: int, user_update: UserUpdate, db: Session):
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
 
-    for key, value in user_update.dict(exclude_unset=True).items():
+    for key, value in user_update.items():
         setattr(user, key, value)
 
     db.commit()
