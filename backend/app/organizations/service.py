@@ -36,7 +36,7 @@ def update_organization(db: Session, organization_id: int, data: OrganizationUpd
 def delete_organization(db: Session, organization_id: int):
     organization = get_organization(db, organization_id)
     if not organization:
-        return False
+        return None
 
     db.delete(organization)
     db.commit()
