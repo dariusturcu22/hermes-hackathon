@@ -1,17 +1,20 @@
 from datetime import datetime
-from typing import Optional, Literal
+from typing import Optional, Literal, List
 from pydantic import BaseModel, EmailStr, Field
 
+
 class UserBase(BaseModel):
-    auth0_id: str = Field(..., max_length=128)
-    name: str = Field(None, max_length=128)
-    email: Optional[EmailStr] = Field(None, max_length=256)
+    auth0_id: str
+    name: str = None
+    email: EmailStr = None
     role: Literal["volunteer", "organizer"] = None
-    total_points: int = Field(default=0, ge=0)
+    total_points: int = 0
+
 
 class UserCreate(UserBase):
     """Schema for creating a new user"""
     pass
+
 
 class UserUpdate(BaseModel):
     """Schema for updating user fields"""
@@ -20,9 +23,6 @@ class UserUpdate(BaseModel):
     role: Optional[Literal["volunteer", "organizer"]] = None
     total_points: Optional[int] = Field(None, ge=0)
 
-class UserDelete(BaseModel):
-    id: int
-    pass
 
 class UserInDB(UserBase):
     """Schema representing a user stored in DB"""
@@ -33,6 +33,14 @@ class UserInDB(UserBase):
     class Config:
         orm_mode = True
 
-class UserOut(UserBase):
+
+class UserOut(BaseModel):
     """Schema for returning user data in API responses"""
-    pass
+    success: bool
+    data: UserInDB
+
+
+class UserListOut(BaseModel):
+    success: bool
+    data: List[UserInDB]
+    total: int

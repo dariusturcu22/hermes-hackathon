@@ -1,138 +1,132 @@
-from alembic.operations.toimpl import drop_table
 from sqlalchemy.orm import Session
-from sqlalchemy import and_, or_, func
-from typing import List, Optional
+from sqlalchemy import func, and_
+from typing import Optional, List
 from datetime import datetime
-from backend.app.events.model import Opportunity
-from backend.app.events.schema import OpportunityCreate, OpportunityUpdate, OpportunityStatus
+
+from backend.app.events.model import Event
+from backend.app.events.schema import EventCreate, EventUpdate, EventStatus
 from backend.app.organizations.model import Organization
 
-class OpportunityService:
+
+class EventService:
     @staticmethod
-    def get_opportunity(db: Session, opportunity_id: int) -> Optional[Opportunity]:
-        return db.query(Opportunity).filter(Opportunity.id == opportunity_id).first()
+    def get_event(db: Session, event_id: int) -> Optional[Event]:
+        return db.query(Event).filter(Event.id == event_id).first()
 
     @staticmethod
-    def get_opportunities(
+    def list_events(
             db: Session,
             skip: int = 0,
             limit: int = 100,
             organization_id: Optional[int] = None,
-            status: Optional[str] = None,
-            difficulty: Optional[str] = None
-    ) -> List[Opportunity]:
-        query = db.query(Opportunity)
+            status: Optional[EventStatus] = None,
+            difficulty: Optional[str] = None,
+    ) -> List[Event]:
 
-        if organization_id:
-            query = query.filter(Opportunity.organization_id == organization_id)
+        query = db.query(Event)
 
-        if status:
-            query = query.filter(Opportunity.status == status)
-
-        if difficulty:
-            query = query.filter(Opportunity.difficulty == difficulty)
+        if organization_id is not None:
+            query = query.filter(Event.organization_id == organization_id)
+        if status is not None:
+            query = query.filter(Event.status == status)
+        if difficulty is not None:
+            query = query.filter(Event.difficulty == difficulty)
 
         return query.offset(skip).limit(limit).all()
 
     @staticmethod
-    def get_opportunities_with_organization(
+    def list_events_with_organization(
             db: Session,
             skip: int = 0,
             limit: int = 100,
-            status: Optional[str] = None,
-    ) -> List:
-        query = db.query(
-            Opportunity,
-            Organization.name.label('organization_name')
-        ).join(Organization, Opportunity.organization_id == Organization.id)
+            status: Optional[EventStatus] = None,
+    ):
+        query = (
+            db.query(Event, Organization.name.label("organization_name"))
+            .join(Organization, Event.organization_id == Organization.id)
+        )
 
-        if status:
-            query = query.filter(Opportunity.status == status)
+        if status is not None:
+            query = query.filter(Event.status == status)
 
         results = query.offset(skip).limit(limit).all()
 
-        opportunities_with_org = []
-        for opportunity, org_name in results:
-            opportunity_dict = {**opportunity.__dict__}
-            opportunity_dict['organization_name'] = org_name
-            opportunities_with_org.append(opportunity_dict)
-
-        return opportunities_with_org
+        return [
+            {
+                **event.__dict__,
+                "organization_name": org_name,
+            }
+            for event, org_name in results
+        ]
 
     @staticmethod
-    def create_opportunity(db: Session, opportunity: OpportunityCreate) -> Opportunity:
-        final_points = opportunity.proposed_points
+    def create_event(db: Session, data: EventCreate) -> Event:
+        final_points = data.proposed_points
 
-        db_opportunity = Opportunity(
-            **opportunity.dict(),
-            final_points = final_points,
-            status = 'open'
+        event = Event(
+            **data.model_dump(),
+            final_points=final_points,
+            status=EventStatus.OPEN,
         )
 
-        db.add(db_opportunity)
+        db.add(event)
         db.commit()
-        db.refresh(db_opportunity)
-        return db_opportunity
+        db.refresh(event)
+        return event
 
     @staticmethod
-    def update_opportunity(
-            db: Session,
-            opportunity_id: int,
-            opportunity_update: OpportunityUpdate
-    ) -> Optional[Opportunity]:
-        db_opportunity = db.query(Opportunity).filter(Opportunity.id == opportunity_id).first()
-
-        if not db_opportunity:
+    def update_event(db: Session, event_id: int, data: EventUpdate):
+        event = db.query(Event).filter(Event.id == event_id).first()
+        if not event:
             return None
 
-        updated_data = opportunity_update.dict(exclude_unset=True)
+        update_data = data.model_dump(exclude_unset=True)
+        for k, v in update_data.items():
+            setattr(event, k, v)
 
-        for field, value in updated_data.items():
-            setattr(db_opportunity, field, value)
-
-        db_opportunity.updated_at = datetime.now()
+        event.updated_at = datetime.utcnow()
         db.commit()
-        db.refresh(db_opportunity)
-        return db_opportunity
+        db.refresh(event)
+        return event
 
     @staticmethod
-    def delete_opportunity(db: Session, opportunity_id: int) -> bool:
-        db_opportunity = db.query(Opportunity).filter(Opportunity.id == opportunity_id).first()
-
-        if not db_opportunity:
+    def delete_event(db: Session, event_id: int) -> bool:
+        event = db.query(Event).filter(Event.id == event_id).first()
+        if not event:
             return False
 
-        db.delete(db_opportunity)
+        db.delete(event)
         db.commit()
         return True
 
     @staticmethod
-    def close_opportunity(db: Session, opportunity_id: int) -> Optional[Opportunity]:
-        db_opportunity = db.query(Opportunity).filter(Opportunity.id == opportunity_id).first()
-
-        if not db_opportunity:
+    def close_event(db: Session, event_id: int):
+        event = db.query(Event).filter(Event.id == event_id).first()
+        if not event:
             return None
 
-        db_opportunity.status = 'closed'
-        db_opportunity.updated_at = datetime.now()
+        event.status = EventStatus.CLOSED
+        event.updated_at = datetime.utcnow()
         db.commit()
-        db.refresh(db_opportunity)
-        return db_opportunity
+        db.refresh(event)
+        return event
 
     @staticmethod
-    def get_upcoming_opportunities(db: Session, limit: int = 10) -> List[Opportunity]:
-        return db.query(Opportunity).filter(
-            and_(
-                Opportunity.status == 'open',
-                Opportunity.date_start > datetime.now()
+    def upcoming_events(db: Session, limit: int = 10):
+        return (
+            db.query(Event)
+            .filter(
+                and_(
+                    Event.status == EventStatus.OPEN,
+                    Event.date_start > datetime.utcnow(),
+                )
             )
-        ).order_by(Opportunity.date_start.asc()).limit(limit).all()
+            .order_by(Event.date_start.asc())
+            .limit(limit)
+            .all()
+        )
 
     @staticmethod
-    def count_opportunities_by_status(db: Session) -> dict:
-        results = db.query(
-            Opportunity.status,
-            func.count(Opportunity.id)
-        ).group_by(Opportunity.status).all()
-
+    def count_by_status(db: Session) -> dict:
+        results = db.query(Event.status, func.count(Event.id)).group_by(Event.status).all()
         return {status: count for status, count in results}

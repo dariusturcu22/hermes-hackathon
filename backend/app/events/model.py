@@ -5,7 +5,7 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from ..database import Base
 
-class Opportunity(Base):
+class Event(Base):
     __tablename__ = 'opportunities'
 
     id = Column(Integer, primary_key=True, index = True, autoincrement=True)

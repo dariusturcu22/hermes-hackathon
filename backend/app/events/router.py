@@ -1,145 +1,93 @@
 from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
-from typing import List, Optional
+from typing import Optional
 
 from backend.app.database import get_db
-from backend.app.events.service import OpportunityService
+from backend.app.events.service import EventService
 from backend.app.events.schema import (
-    OpportunityCreate,
-    OpportunityUpdate,
-    OpportunityInDB,
-    OpportunityResponse,
-    OpportunityListResponse,
-    OpportunityStatus
+    EventCreate,
+    EventUpdate,
+    EventInDB,
+    EventOut,
+    EventListOut,
+    EventStatus
 )
 
-router = APIRouter()
+router = APIRouter(prefix="/events", tags=["Events"])
 
 
-@router.get("/opportunities", response_model=OpportunityListResponse)
-def get_opportunities(
+@router.get("/", response_model=EventListOut)
+def list_events(
         skip: int = 0,
         limit: int = 100,
-        organization_id: Optional[int] = Query(None),
-        status: Optional[OpportunityStatus] = Query(None),
-        difficulty: Optional[str] = Query(None),
-        db: Session = Depends(get_db)
+        organization_id: Optional[int] = None,
+        status: Optional[EventStatus] = None,
+        difficulty: Optional[str] = None,
+        db: Session = Depends(get_db),
 ):
-    """Get all opportunities with optional filtering"""
-    opportunities = OpportunityService.get_opportunities_with_organization(
-        db, skip=skip, limit=limit, status=status
+    items = EventService.get_events_with_organization(
+        db,
+        skip=skip,
+        limit=limit,
+        status=status,
     )
 
     return {
         "success": True,
-        "data": opportunities,
-        "total": len(opportunities)
+        "data": items,
+        "total": len(items),
     }
 
 
-@router.get("/opportunities/{opportunity_id}", response_model=OpportunityResponse)
-def get_opportunity(opportunity_id: int, db: Session = Depends(get_db)):
-    """Get a specific opportunity by ID"""
-    opportunity = OpportunityService.get_opportunity(db, opportunity_id)
+@router.get("/{event_id}", response_model=EventOut)
+def get_event(event_id: int, db: Session = Depends(get_db)):
+    item = EventService.get_event(db, event_id)
+    if not item:
+        raise HTTPException(status_code=404, detail="Event not found")
 
-    if not opportunity:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Opportunity not found"
-        )
-
-    return {
-        "success": True,
-        "data": opportunity
-    }
+    return {"success": True, "data": item}
 
 
-@router.post("/opportunities", response_model=OpportunityResponse, status_code=status.HTTP_201_CREATED)
-def create_opportunity(opportunity: OpportunityCreate, db: Session = Depends(get_db)):
-    """Create a new opportunity"""
-    db_opportunity = OpportunityService.create_opportunity(db, opportunity)
-
-    return {
-        "success": True,
-        "data": db_opportunity
-    }
+@router.post("/", response_model=EventOut, status_code=201)
+def create_event(data: EventCreate, db: Session = Depends(get_db)):
+    item = EventService.create_event(db, data)
+    return {"success": True, "data": item}
 
 
-@router.put("/opportunities/{opportunity_id}", response_model=OpportunityResponse)
-def update_opportunity(
-        opportunity_id: int,
-        opportunity_update: OpportunityUpdate,
-        db: Session = Depends(get_db)
-):
-    """Update an existing opportunity"""
-    db_opportunity = OpportunityService.update_opportunity(db, opportunity_id, opportunity_update)
+@router.put("/{event_id}", response_model=EventOut)
+def update_event(event_id: int, data: EventUpdate, db: Session = Depends(get_db)):
+    item = EventService.update_event(db, event_id, data)
+    if not item:
+        raise HTTPException(status_code=404, detail="Event not found")
 
-    if not db_opportunity:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Opportunity not found"
-        )
-
-    return {
-        "success": True,
-        "data": db_opportunity
-    }
+    return {"success": True, "data": item}
 
 
-@router.delete("/opportunities/{opportunity_id}")
-def delete_opportunity(opportunity_id: int, db: Session = Depends(get_db)):
-    """Delete an opportunity"""
-    success = OpportunityService.delete_opportunity(db, opportunity_id)
-
+@router.delete("/{event_id}", response_model=dict)
+def delete_event(event_id: int, db: Session = Depends(get_db)):
+    success = EventService.delete_event(db, event_id)
     if not success:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Opportunity not found"
-        )
+        raise HTTPException(status_code=404, detail="Event not found")
 
-    return {
-        "success": True,
-        "message": "Opportunity deleted successfully"
-    }
+    return {"success": True, "message": "Event deleted successfully"}
 
 
-@router.post("/opportunities/{opportunity_id}/close", response_model=OpportunityResponse)
-def close_opportunity(opportunity_id: int, db: Session = Depends(get_db)):
-    """Close an opportunity (stop accepting applications)"""
-    db_opportunity = OpportunityService.close_opportunity(db, opportunity_id)
+@router.post("/{event_id}/close", response_model=EventOut)
+def close_event(event_id: int, db: Session = Depends(get_db)):
+    item = EventService.close_event(db, event_id)
+    if not item:
+        raise HTTPException(status_code=404, detail="Event not found")
 
-    if not db_opportunity:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
-            detail="Opportunity not found"
-        )
-
-    return {
-        "success": True,
-        "data": db_opportunity
-    }
+    return {"success": True, "data": item}
 
 
-@router.get("/opportunities/upcoming")
-def get_upcoming_opportunities(
-        limit: int = Query(10, le=50),
-        db: Session = Depends(get_db)
-):
-    """Get upcoming open opportunities"""
-    opportunities = OpportunityService.get_upcoming_opportunities(db, limit)
-
-    return {
-        "success": True,
-        "data": opportunities
-    }
+@router.get("/upcoming", response_model=EventListOut)
+def upcoming_events(limit: int = Query(10, le=50), db: Session = Depends(get_db)):
+    items = EventService.get_upcoming_events(db, limit)
+    return {"success": True, "data": items, "total": len(items)}
 
 
-@router.get("/stats/opportunities")
-def get_opportunity_stats(db: Session = Depends(get_db)):
-    """Get statistics about opportunities"""
-    stats = OpportunityService.count_opportunities_by_status(db)
-
-    return {
-        "success": True,
-        "data": stats
-    }
+@router.get("/stats", response_model=dict)
+def event_stats(db: Session = Depends(get_db)):
+    stats = EventService.count_events_by_status(db)
+    return {"success": True, "data": stats}
