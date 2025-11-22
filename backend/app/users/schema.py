@@ -24,15 +24,6 @@ class UserDelete(BaseModel):
     id: int
     pass
 
-class UserInDB(UserBase):
-    """Schema representing a user stored in DB"""
-    id: int
-    created_at: datetime
-    updated_at: datetime
-
-    class Config:
-        orm_mode = True
-
 class UserOut(UserBase):
     """Schema for returning user data in API responses"""
     pass
