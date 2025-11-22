@@ -2,38 +2,41 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import {slugify} from "../utils/slugify";
 
-export default function EventCard(
-    {title, location, time, organizer, image}: {
-        title: string;
-        location: string;
-        time: string;
-        organizer: string;
-        image: string;
-    }) {
-
-    const slug = slugify(`${title}-${organizer}`);
-    return (
+export default function EventCard({
+  title,
+  location,
+  time,
+  organizer,
+  image,
+  slug, // ← Primește slug-ul ca prop
+}: {
+  title: string;
+  location: string;
+  time: string;
+  organizer: string;
+  image: string;
+  slug: string; // ← Adaugă tipul
+}) {
+  return (
     <Link
       href={`/event/${slug}`}
       className="
         block
         w-full
-        max-w-[380px]
-        lg:max-w-[420px]
+        max-w-[450px]
+        lg:max-w-[480px]
         mx-auto
         rounded-2xl
         overflow-hidden
         bg-white dark:bg-gray-900
         border border-black/10 dark:border-white/10
-        shadow-lg
-        hover:shadow-xl
+        shadow-lg hover:shadow-xl
         transition
       "
     >
       {/* IMAGE */}
-      <div className="relative w-full aspect-square">
+      <div className="relative w-full h-72">
         <Image
           src={image}
           alt={title}
@@ -43,14 +46,15 @@ export default function EventCard(
       </div>
 
       {/* TEXT */}
-      <div className="p-6">
-        <h2 className="text-2xl font-bold mb-3">{title}</h2>
-        <p className="text-base text-gray-600 dark:text-gray-300">{location}</p>
-        <p className="text-base text-gray-600 dark:text-gray-300">{time}</p>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-3">
+      <div className="px-6 pt-5 pb-6">
+        <h2 className="text-xl font-bold mb-2">{title}</h2>
+        <p className="text-sm text-gray-600 dark:text-gray-300">{location}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-300">{time}</p>
+        <p className="text-xs text-gray-500 dark:text-gray-400 mt-2"></p>
           Organized by <span className="font-semibold">{organizer}</span>
-        </p>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+          </p>
       </div>
     </Link>
-  );
+);
 }
