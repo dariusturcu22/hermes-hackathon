@@ -1,11 +1,9 @@
-export default async function Home() {
-    const res = await fetch("http://localhost:8000", { cache: "no-store" });
-    const data = await res.json();
+import WelcomeActions from "./components/WelcomeActions";
 
-    return (
-        <div style={{ padding: 20 }}>
-            <h1>Frontend → Backend Test</h1>
-            <p>{data.message}</p>
-        </div>
-    );
+export default function LandingPage() {
+  return (
+    <main className="min-h-[calc(100vh-80px)] flex items-center justify-center">
+      <WelcomeActions />
+    </main>
+  );
 }

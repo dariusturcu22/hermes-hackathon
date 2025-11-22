@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function EventCard({
+
   title,
   location,
   time,
@@ -19,8 +20,7 @@ export default function EventCard({
   slug: string; // ← Adaugă tipul
 }) {
   return (
-    <Link
-      href={`/event/${slug}`}
+    <Link href={`/event/${slug}`}
       className="
         block
         w-full

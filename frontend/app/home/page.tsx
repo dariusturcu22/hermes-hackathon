@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import EventCard from "./EventCard";
+import EventCard from "../components/EventCard";
 import { events } from "../mockData/events";
+
 
 export default function HomePage() {
   const [search, setSearch] = useState("");
@@ -16,7 +17,7 @@ export default function HomePage() {
   return (
     <main className="px-6 py-10 max-w-[1500px] mx-auto">
 
-      <h1 className="text-3xl font-bold mb-6">Upcoming Volunteer Events</h1>
+      <h1 className="text-3xl font-bold mb-8 pl-8">Upcoming Volunteering Events</h1>
 
       <div className="w-full flex justify-end mb-10">
         <input
@@ -37,7 +38,7 @@ export default function HomePage() {
           gap-10
         "
       >
-        {filteredEvents.map((event) => (
+         {filteredEvents.map((event) => (
           <EventCard key={event.slug} {...event} />
         ))}
       </div>
