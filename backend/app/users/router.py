@@ -6,7 +6,6 @@ from ..users.service import UserService
 from ..users.schema import (
     UserCreate,
     UserUpdate,
-    UserInDB,
     UserOut,
     UserListOut
 )

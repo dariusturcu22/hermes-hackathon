@@ -1,10 +1,10 @@
 from typing import Optional
 
-import jwt
+import jwt # pip install PyJWT
 from fastapi import Depends, HTTPException, status
 from fastapi.security import SecurityScopes, HTTPAuthorizationCredentials, HTTPBearer
 
-from config import get_settings
+from ..config import get_settings
 
 class UnauthorizedException(HTTPException):
     def __init__(self, detail: str, **kwargs):
