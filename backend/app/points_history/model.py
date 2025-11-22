@@ -8,7 +8,7 @@ class PointsHistory(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    opportunity_id = Column(Integer, ForeignKey("opportunities.id"), nullable=True)
+    opportunity_id = Column(Integer, ForeignKey("opportunities.id"), nullable=False)
     points_awarded = Column(Integer, nullable=False)
     reason = Column(String(128), nullable=True)
     created_at = Column(DateTime, server_default=func.now())
