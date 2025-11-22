@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import UserEntry from "./UserEntry";
 
 export default function LeaderboardPage() {
@@ -13,11 +16,32 @@ export default function LeaderboardPage() {
     <main className="px-6 py-10">
       <h1 className="text-4xl font-bold mb-10">Leaderboard</h1>
 
-      <div className="flex flex-col gap-6">
+      <motion.div
+        initial="hidden"
+        animate="visible"
+        variants={{
+          hidden: {},
+          visible: {
+            transition: {
+              staggerChildren: 0.15, // întârziere între carduri
+            },
+          },
+        }}
+        className="flex flex-col gap-6"
+      >
         {topUsers.map((user) => (
-          <UserEntry key={user.rank} {...user} />
+          <motion.div
+            key={user.rank}
+            variants={{
+              hidden: { opacity: 0, y: 40 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+            <UserEntry {...user} />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </main>
   );
 }
