@@ -66,7 +66,7 @@ export default function Navbar() {
 
                     {/* MOBILE MENU BUTTON */}
                     <button
-                        className="lg:hudden p-2 rounded-lg bg-white/10 border border-white/20"
+                        className="lg:hidden p-2 rounded-lg bg-white/10 border border-white/20"
                         onClick={() => setMobileOpen(!mobileOpen)}>
                         <Menu className="w-6 h-6"/>
                     </button>
