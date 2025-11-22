@@ -33,7 +33,7 @@ export default function Navbar() {
 
 
                     <Link
-                        href=""
+                        href="/leaderboard"
                         className=" flex items-center gap-2 transition lg:px-5 lg:py-3 lg:rounded-xl lg:border
                         lg:border-white/20 lg:bg-white/8 lg:backdrop-blur-xl hover:lg:bg-white/20    "
                     >
