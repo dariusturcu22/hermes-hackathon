@@ -1,4 +1,3 @@
-from datetime import datetime
 from typing import Optional, Literal
 from pydantic import BaseModel, EmailStr, Field
 
@@ -21,17 +20,9 @@ class UserUpdate(BaseModel):
     total_points: Optional[int] = Field(None, ge=0)
 
 class UserDelete(BaseModel):
+    """Schema for deleting user data"""
     id: int
     pass
-
-class UserInDB(UserBase):
-    """Schema representing a user stored in DB"""
-    id: int
-    created_at: datetime
-    updated_at: datetime
-
-    class Config:
-        orm_mode = True
 
 class UserOut(UserBase):
     """Schema for returning user data in API responses"""

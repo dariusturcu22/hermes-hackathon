@@ -1,6 +1,6 @@
 from fastapi import HTTPException
 
-from backend.app.users.schema import UserCreate, UserBase, UserUpdate, UserDelete, UserInDB
+from backend.app.users.schema import UserCreate, UserBase, UserUpdate, UserDelete
 from sqlalchemy.orm import Session
 from model import User
 
@@ -9,7 +9,7 @@ def create_user(user: UserCreate, db: Session):
     if db_user:
         raise HTTPException(status_code=400, detail="auth0_id already registered")
 
-    # new_user = UserInDB()
+    # new_user = UserInDB(user.auth0_id, user.name, user.email, user.role, user.total_points, )
     db.add(user)
     db.commit()
     db.refresh(user)
