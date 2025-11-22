@@ -38,4 +38,8 @@ class OrganizationOut(BaseModel):
 class OrganizationListOut(BaseModel):
     success: bool
     data: List[OrganizationInDB]
-    total: int
+
+
+class OrganizationDelete(BaseModel):
+    success: bool
+    message: str

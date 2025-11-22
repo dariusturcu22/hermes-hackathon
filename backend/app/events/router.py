@@ -17,7 +17,7 @@ router = APIRouter(prefix="/events", tags=["Events"])
 
 
 @router.get("/", response_model=EventListOut)
-def list_events(
+def get_events(
         skip: int = 0,
         limit: int = 100,
         organization_id: Optional[int] = None,

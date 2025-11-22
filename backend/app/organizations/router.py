@@ -7,7 +7,8 @@ from ..organizations.schema import (
     OrganizationCreate,
     OrganizationUpdate,
     OrganizationOut,
-    OrganizationListOut
+    OrganizationListOut,
+    OrganizationDelete
 )
 
 router = APIRouter(prefix="/organizations", tags=["Organizations"])
@@ -20,9 +21,9 @@ def create_organization(data: OrganizationCreate, db: Session = Depends(get_db))
 
 
 @router.get("/", response_model=OrganizationListOut)
-def list_organizations(db: Session = Depends(get_db)):
+def get_organizations(db: Session = Depends(get_db)):
     items = OrganizationService.get_organizations(db)
-    return {"success": True, "data": items, "total": len(items)}
+    return {"success": True, "data": items}
 
 
 @router.get("/{organization_id}", response_model=OrganizationOut)
@@ -43,7 +44,7 @@ def update_organization(organization_id: int, data: OrganizationUpdate, db: Sess
     return {"success": True, "data": item}
 
 
-@router.delete("/{organization_id}", response_model=dict)
+@router.delete("/{organization_id}", response_model=OrganizationDelete)
 def delete_organization(organization_id: int, db: Session = Depends(get_db)):
     success = OrganizationService.delete_organization(db, organization_id)
     if not success:

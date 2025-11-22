@@ -44,6 +44,7 @@ class ApplicationService:
             limit: int = 100,
             user_id: Optional[int] = None,
             event_id: Optional[int] = None,
+            application_id: Optional[int] = None,
             organization_id: Optional[int] = None,
             status: Optional[str] = None
     ) -> List:
@@ -67,6 +68,9 @@ class ApplicationService:
 
         if event_id:
             query = query.filter(Application.event_id == event_id)
+
+        if application_id:
+            query = query.filter(Application.id == application_id)
 
         if organization_id:
             query = query.filter(Organization.id == organization_id)

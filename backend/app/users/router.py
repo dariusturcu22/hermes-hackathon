@@ -20,7 +20,7 @@ def create_user(data: UserCreate, db: Session = Depends(get_db)):
 
 
 @router.get("/", response_model=UserListOut)
-def list_users(db: Session = Depends(get_db)):
+def get_users(db: Session = Depends(get_db)):
     items = UserService.get_users(db)
     return {"success": True, "data": items, "total": len(items)}
 

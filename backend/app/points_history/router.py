@@ -15,7 +15,7 @@ def create_points_history(data: PointsHistoryCreate, db: Session = Depends(get_d
 
 
 @router.get("/", response_model=list[PointsHistoryRead])
-def list_points_history(db: Session = Depends(get_db)):
+def get_points_history(db: Session = Depends(get_db)):
     return service.get_points_history(db)
 
 
