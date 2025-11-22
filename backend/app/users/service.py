@@ -1,8 +1,8 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
-from backend.app.users.model import User
-from backend.app.users.schema import UserCreate, UserUpdate
+from ..users.model import User
+from ..users.schema import UserCreate, UserUpdate
 
 
 class UserService:

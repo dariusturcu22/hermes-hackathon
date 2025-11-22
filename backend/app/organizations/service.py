@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from backend.app.organizations.model import Organization
-from backend.app.organizations.schema import OrganizationCreate, OrganizationUpdate
+from ..organizations.model import Organization
+from ..organizations.schema import OrganizationCreate, OrganizationUpdate
 
 
 class OrganizationService:
@@ -13,7 +13,7 @@ class OrganizationService:
         return organization
 
     @staticmethod
-    def list_organizations(db: Session):
+    def get_organizations(db: Session):
         return db.query(Organization).all()
 
     @staticmethod
@@ -38,7 +38,7 @@ class OrganizationService:
     def delete_organization(db: Session, organization_id: int):
         organization = OrganizationService.get_organization(db, organization_id)
         if not organization:
-            return None
+            return False
 
         db.delete(organization)
         db.commit()

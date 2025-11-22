@@ -3,9 +3,9 @@ from sqlalchemy import func, and_
 from typing import Optional, List
 from datetime import datetime
 
-from backend.app.events.model import Event
-from backend.app.events.schema import EventCreate, EventUpdate, EventStatus
-from backend.app.organizations.model import Organization
+from ..events.model import Event
+from ..events.schema import EventCreate, EventUpdate, EventStatus
+from ..organizations.model import Organization
 
 
 class EventService:
@@ -84,7 +84,7 @@ class EventService:
         for k, v in update_data.items():
             setattr(event, k, v)
 
-        event.updated_at = datetime.utcnow()
+        event.updated_at = datetime.now()
         db.commit()
         db.refresh(event)
         return event
@@ -106,7 +106,7 @@ class EventService:
             return None
 
         event.status = EventStatus.CLOSED
-        event.updated_at = datetime.utcnow()
+        event.updated_at = datetime.now()
         db.commit()
         db.refresh(event)
         return event
@@ -118,7 +118,7 @@ class EventService:
             .filter(
                 and_(
                     Event.status == EventStatus.OPEN,
-                    Event.date_start > datetime.utcnow(),
+                    Event.date_start > datetime.now(),
                 )
             )
             .order_by(Event.date_start.asc())

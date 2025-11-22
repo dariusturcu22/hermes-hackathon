@@ -1,0 +1,32 @@
+### CREATE POINTS HISTORY ENTRY
+POST http://localhost:8000/points_history/
+Content-Type: application/json
+
+{
+  "user_id": 2,
+  "opportunity_id": 1,
+  "points_awarded": 50,
+  "reason": "Completed volunteer event"
+}
+
+
+### LIST ALL POINTS HISTORY ENTRIES
+GET http://localhost:8000/points_history/
+
+
+### GET SINGLE POINTS HISTORY ENTRY BY ID
+GET http://localhost:8000/points_history/1
+
+
+### UPDATE POINTS HISTORY ENTRY (PARTIAL UPDATE)
+PATCH http://localhost:8000/points_history/1
+Content-Type: application/json
+
+{
+  "points_awarded": 60,
+  "reason": "Updated after review"
+}
+
+
+### DELETE POINTS HISTORY ENTRY
+DELETE http://localhost:8000/points_history/1

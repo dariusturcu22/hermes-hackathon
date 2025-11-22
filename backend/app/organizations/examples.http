@@ -1,0 +1,32 @@
+### CREATE ORGANIZATION
+POST http://localhost:8000/organizations/
+Content-Type: application/json
+
+{
+  "name": "Green Earth NGO",
+  "description": "Environmental volunteer projects",
+  "owner_user_id": 2,
+  "verified": false
+}
+
+
+### LIST ORGANIZATIONS
+GET http://localhost:8000/organizations/
+
+
+### GET SINGLE ORGANIZATION
+GET http://localhost:8000/organizations/1
+
+
+### UPDATE ORGANIZATION (PATCH)
+PATCH http://localhost:8000/organizations/1
+Content-Type: application/json
+
+{
+  "verified": true,
+  "description": "Updated organization description"
+}
+
+
+### DELETE ORGANIZATION
+DELETE http://localhost:8000/organizations/1
