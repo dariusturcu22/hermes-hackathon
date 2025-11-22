@@ -1,7 +1,7 @@
 "use client";
 
 import {useState} from "react";
-import {Home, Trophy, Menu,ChevronDown} from "lucide-react";
+import {Home, Trophy, Menu, ChevronDown} from "lucide-react";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 import Link from "next/link";
@@ -13,35 +13,36 @@ export default function Navbar() {
     return (
         <div className={dark ? "dark" : ""}>
             <nav
-                className="w-full flex justify-between items-center px-6 py-4 backdrop-blur-xl bg-gray-950 border-b border-white/10 text-white">
+                className={`w-full flex justify-between items-center px-6 py-4 backdrop-blur-xl border-b border-white/10 transition-all ${
+                    dark ? "bg-gray-950 text-white" : "bg-gray-100 text-black"}`}>
                 {/* LEFT SIDE */}
                 <div className="flex items-center gap-6">
                     {/* LOGO - hidden on small screens */}
-                    <div className="font-bold text-xl tracking-tight hidden md:block">name</div>
+                    <div className="font-bold text-xl tracking-tight hidden lg:block">VoW</div>
 
-                    <div className="font-bold text-xl tracking-tight">name</div>
+
 
                     <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition">
                         <Home className="w-5 h-5"/>
-                        <span className="text-sm font-medium hidden md:block">Home</span>
+                        <span className="text-sm font-medium hidden lg:block">Home</span>
                     </Link>
 
                     <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition">
                         <Trophy className="w-5 h-5"/>
-                        <span className="text-sm font-medium hidden md:block">Leaderboard</span>
+                        <span className="text-sm font-medium hidden lg:block">Leaderboard</span>
                     </Link>
                 </div>
 
                 {/* RIGHT SIDE */}
-                <div className="flex items-center gap-4">
+                 <div className="flex items-center gap-4">
                     <div className="text-sm font-medium">Hello name</div>
                     <div
                         className="text-sm font-medium px-3 py-1 rounded-xl backdrop-blur-xl bg-white/10 border border-white/20">0
                         points
                     </div>
                     {/* ON DESKTOP show avatar + dropdown */}
-                    <div className="hidden md:flex items-center gap-4">
-                        <div className="text-sm font-medium">Hello name</div>
+                    <div className="hidden lg:flex items-center gap-4">
+
                         {/* PROFILE DROPDOWN */}
                         <DropdownMenu>
                             <DropdownMenuTrigger className="flex items-center gap-2 cursor-pointer select-none">
@@ -65,7 +66,7 @@ export default function Navbar() {
 
                     {/* MOBILE MENU BUTTON */}
                     <button
-                        className="md:hidden p-2 rounded-lg bg-white/10 border border-white/20"
+                        className="lg:hidden p-2 rounded-lg bg-white/10 border border-white/20"
                         onClick={() => setMobileOpen(!mobileOpen)}>
                         <Menu className="w-6 h-6"/>
                     </button>
@@ -74,14 +75,14 @@ export default function Navbar() {
                     {/* DARK MODE TOGGLE */}
                     <button
                         onClick={() => setDark(!dark)}
-                        className="text-xl px-4 py-2 rounded-xl backdrop-blur-xl bg-white/10 border border-white/20 hover:bg-white/20 transition hidden md:block">
+                        className="text-xl px-4 py-2 rounded-xl backdrop-blur-xl bg-white/10 border border-white/20 hover:bg-white/20 transition hidden lg:block">
                         {dark ? "☀️" : "🌙"}
                     </button>
                 </div>
             </nav>
             {/* MOBILE MENU DROPDOWN */}
             {mobileOpen && (
-                <div className="md:hidden bg-gray-950 border-b border-white/10 text-white px-6 py-4 space-y-4">
+                <div className="lg:hidden bg-gray-950 border-b border-white/10 text-white px-6 py-4 space-y-4">
                     <Link href="/profile" className="block py-2 hover:opacity-80">
                         Profile
                     </Link>
