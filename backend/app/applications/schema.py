@@ -53,3 +53,7 @@ class ApplicationListResponse(BaseModel):
 class ApplicationStatsResponse(BaseModel):
     success: bool
     data: dict
+
+class ResponseWrapper(BaseModel):
+    success: bool
+    data: ApplicationWithDetailsResponse

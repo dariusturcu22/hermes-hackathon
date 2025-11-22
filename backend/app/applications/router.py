@@ -11,7 +11,7 @@ from .schema import (
     ApplicationWithDetailsResponse,
     ApplicationListResponse,
     ApplicationStatsResponse,
-    ApplicationStatus
+    ApplicationStatus, ResponseWrapper
 )
 
 router = APIRouter()
@@ -40,14 +40,14 @@ def get_applications(
     }
 
 
-@router.get("/applications/{application_id}", response_model=ApplicationWithDetailsResponse)
+@router.get("/applications/{application_id}", response_model=ResponseWrapper)
 def get_application(application_id: int, db: Session = Depends(get_db)):
     """Get a specific application by ID with details"""
     applications = ApplicationService.get_applications_with_details(
-        db, limit=1, event_id=application_id
+        db, limit=1, application_id=application_id
     )
 
-    if not applications:
+    if not applications or applications[0] is None:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Application not found"

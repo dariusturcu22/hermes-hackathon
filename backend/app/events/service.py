@@ -35,11 +35,13 @@ class EventService:
         return query.offset(skip).limit(limit).all()
 
     @staticmethod
-    def list_events_with_organization(
+    def get_events_with_organization(
             db: Session,
             skip: int = 0,
             limit: int = 100,
             status: Optional[EventStatus] = None,
+            organization_id: Optional[int] = None,
+            difficulty: Optional[str] = None,
     ):
         query = (
             db.query(Event, Organization.name.label("organization_name"))
@@ -48,6 +50,12 @@ class EventService:
 
         if status is not None:
             query = query.filter(Event.status == status)
+
+        if organization_id is not None:
+            query = query.filter(Event.organization_id == organization_id)
+
+        if difficulty is not None:
+            query = query.filter(Event.difficulty == difficulty)
 
         results = query.offset(skip).limit(limit).all()
 
