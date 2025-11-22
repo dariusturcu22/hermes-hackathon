@@ -11,8 +11,6 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     """Schema for creating a new user"""
-    created_at: datetime
-    updated_at: datetime
     pass
 
 class UserUpdate(BaseModel):
@@ -23,6 +21,7 @@ class UserUpdate(BaseModel):
     total_points: Optional[int] = Field(None, ge=0)
 
 class UserDelete(BaseModel):
+    id: int
     pass
 
 class UserInDB(UserBase):
