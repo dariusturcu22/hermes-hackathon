@@ -76,6 +76,20 @@
   --sidebar-ring: oklch(0.708 0 0);
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
+
+  --color-primary: #0096C7;
+  --color-secondary: #0077B6;
+  --color-accent: #00B4D8;
+
+  --color-bg: #e1f2f4;
+  --color-bg-medium: #e2f8fb;
+  --color-bg-medium2: #90E0EF;
+  --color-bg-vibrant: #48CAE4;
+  --color-navbar: #2fadc3;
+  --color-card: #CAF0F8;
+
+  --color-text: #03045E; /* dark blue readable on light bg */
+  --color-text-secondary: #023E8A;
 }
 
 .dark {
@@ -110,6 +124,25 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
+  --color-primary: #00B4D8; /* accent becomes primary */
+  --color-secondary: #48CAE4;
+  --color-accent: #90E0EF;
+
+  --color-bg: #00016e;            /* dark_background */
+  --color-bg-medium: #0053b6;     /* medium_dark_background */
+  --color-bg-medium2: #005f93;
+  --color-bg-vibrant: #0096C7;
+  --color-navbar: #000123;
+  --color-card: #023E8A;
+
+  --color-text: #CAF0F8;
+  --color-text-secondary: #90E0EF;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background 0.25s ease, color 0.25s ease;
 }
 
 @layer base {

@@ -51,11 +51,11 @@ export default function DashboardPage() {
   if (!user) return <div className="text-center pt-40">Loading...</div>;
 
   const isVolunteer = user.type === "volunteer";
-  const events = isVolunteer ? [] : companyEvents;
+  const events = isVolunteer ? volunteerEvents : companyEvents;
 
   return (
     <main className="px-6 py-10 max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold mb-8 dark:text-white">
+      <h1 className="text-3xl font-bold mb-8">
         Dashboard – Welcome, {user.name}
       </h1>
 
@@ -69,7 +69,7 @@ export default function DashboardPage() {
         <div className="mt-10">
           <a
             href="/event/create"
-            className="px-6 py-3 rounded-xl bg-black text-white font-semibold shadow hover:bg-gray-800 transition"
+            className=" px-6 py-3 rounded-xl font-semibold shadow hover:bg-gray-800 transition"
           >
             Add New Event
           </a>
@@ -81,9 +81,11 @@ export default function DashboardPage() {
 
 function EventsGrid({ events }: { events: EventItem[] }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+    <div className=" grid grid-cols-1 sm:grid-cols-2 gap-8">
       {events.map((event, index) => (
-        <EventCard slug={""} key={index} {...event} />
+        <EventCard id={0} description={""} date_start={""} date_end={""} difficulty={""} duration_minutes={0}
+                   proposed_points={0} max_participants={0} organization_id={0} status={""} created_at={""}
+                   updated_at={""} key={index} {...event} />
       ))}
     </div>
   );

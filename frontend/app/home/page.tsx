@@ -15,7 +15,7 @@ export default function HomePage() {
     const filtered = search ? searchEventsByName(search) : events;
 
     return (
-        <main className="px-6 py-10 max-w-[1500px] mx-auto">
+        <main className=" px-6 py-10 max-w-[1500px] mx-auto">
             <h1 className="text-3xl font-bold mb-8 pl-8">
                 Upcoming Volunteering Events
             </h1>
@@ -35,8 +35,8 @@ export default function HomePage() {
                 {filtered.map((event) => (
                     <EventCard
                         key={event.id}
-                        {...event} // spread all Event props
-                        image={"/placeholder.jpg"} // optional, fallback image
+                        {...event}
+                        image={"/placeholder.jpg"}
                     />
                 ))}
             </div>
