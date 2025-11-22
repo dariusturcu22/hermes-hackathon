@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtualenv
+venv/
+.env
+.env.*
+.venv/
+
+# Byte-compiled / build
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Mypy / coverage
+.mypy_cache/
+.coverage
+htmlcov/
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+*.iml
+
+# Logs
+*.log
