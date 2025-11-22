@@ -3,6 +3,7 @@ from datetime import datetime
 from typing import Optional, List
 from enum import Enum
 
+
 class ApplicationStatus(str, Enum):
     PENDING = "pending"
     ACCEPTED = "accepted"
@@ -10,15 +11,19 @@ class ApplicationStatus(str, Enum):
     COMPLETED = "completed"
     NO_SHOW = "no_show"
 
+
 class ApplicationBase(BaseModel):
     status: ApplicationStatus = ApplicationStatus.PENDING
+
 
 class ApplicationCreate(BaseModel):
     user_id: int
     event_id: int
 
+
 class ApplicationUpdate(BaseModel):
-    status: Optional[ApplicationStatus] = None
+    status: ApplicationStatus
+
 
 class ApplicationInDB(ApplicationBase):
     id: int
@@ -30,6 +35,7 @@ class ApplicationInDB(ApplicationBase):
     class Config:
         from_attributes = True
 
+
 class ApplicationWithDetails(ApplicationInDB):
     user_name: str
     user_email: str
@@ -37,23 +43,28 @@ class ApplicationWithDetails(ApplicationInDB):
     organization_name: str
     event_final_points: int
 
+
 class ApplicationResponse(BaseModel):
     success: bool
     data: ApplicationInDB
 
+
 class ApplicationWithDetailsResponse(BaseModel):
     success: bool
     data: ApplicationWithDetails
+
 
 class ApplicationListResponse(BaseModel):
     success: bool
     data: List[ApplicationWithDetails]
     total: int
 
+
 class ApplicationStatsResponse(BaseModel):
     success: bool
     data: dict
 
+
 class ResponseWrapper(BaseModel):
     success: bool
-    data: ApplicationWithDetailsResponse
+    data: ApplicationWithDetails
