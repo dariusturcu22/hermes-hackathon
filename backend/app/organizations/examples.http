@@ -9,14 +9,11 @@ Content-Type: application/json
   "verified": false
 }
 
-
 ### LIST ORGANIZATIONS
 GET http://localhost:8000/organizations/
 
-
 ### GET SINGLE ORGANIZATION
 GET http://localhost:8000/organizations/1
-
 
 ### UPDATE ORGANIZATION (PATCH)
 PATCH http://localhost:8000/organizations/1
@@ -26,7 +23,6 @@ Content-Type: application/json
   "verified": true,
   "description": "Updated organization description"
 }
-
 
 ### DELETE ORGANIZATION
 DELETE http://localhost:8000/organizations/1

@@ -1,20 +1,9 @@
-### GET request to example server
-GET https://examples.http-client.intellij.net/get
-    ?generated-in=PyCharm
-
-### Public endpoint of api - no token required
-GET http://localhost:8000/auth/api/public
-
-### Private endpoint of api
-GET http://localhost:8000/auth/api/private
-Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6ImRBVW43WHNMOTJTbEhjZ3FiWURDXyJ9.eyJpc3MiOiJodHRwczovL2hlcm1lcy1oYWNrYXRob24uZXUuYXV0aDAuY29tLyIsInN1YiI6Im1MSFJDMm5uZHlVZUpLNk1wTHpHUEhHcVZPTTVZY1Q3QGNsaWVudHMiLCJhdWQiOiJ1c2VyLWF1dGgiLCJpYXQiOjE3NjM4MjAwMzcsImV4cCI6MTc2MzkwNjQzNywiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwiYXpwIjoibUxIUkMybm5keVVlSks2TXBMekdQSEdxVk9NNVljVDcifQ.lPPVYo_TzP69aAm5lRgx4E_Zr5lG_qdNpmjoGjyX4dQs_lYjoZTXqujzCI9i7jBYboRxMnwVlf_fT9eH_nIOoojbKCYMOx-ah0RQ6mGyAFOGY-dqQLs98e-2Q5hejaSNTds2eM_LSXFgbKnmkPa3y2sExmEm0Hap8KkC_rg6Ir5t3SjQQlkVZlWDvwsfJ3uSUa0nYSowZA-dJGh9SKnCitDYWKkfsXdngRmyvOewqFWk_w1J89ZKiCZEnCCurswdMG6O9X6JFzXDKC21r-wdJeF2hP621NLR5Z_aaUlkPTQrg0ei4Uvgb2K9UgGt-XoEm6GgrDUKvPrBeCPYcdg7kQ
-
 ### Signup
 POST http://localhost:8000/auth/signup
 Content-Type: application/json
 
 {
-  "email":"johndoe@example.com",
+  "email":"johndoe2@example.com",
   "password":"StrongPass123!"
 }
 
@@ -22,4 +11,4 @@ Content-Type: application/json
 POST http://localhost:8000/auth/login
 Content-Type: application/x-www-form-urlencoded
 
-username=johndoe@example.com&password=StrongPass123!
+username=johndoe2@example.com&password=StrongPass123!

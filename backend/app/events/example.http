@@ -1,17 +1,3 @@
-### Get all events with filtering
-GET http://localhost:8000/events
-    ?status=open
-    &difficulty=easy
-    &skip=0
-    &limit=10
-
-###
-
-### Get a specific event by ID
-GET http://localhost:8000/events/1
-
-###
-
 ### Create a new event
 POST http://localhost:8000/events
 Content-Type: application/json
@@ -28,8 +14,6 @@ Content-Type: application/json
   "max_participants": 20,
   "organization_id": 1
 }
-
-###
 
 ### Create another event example
 POST http://localhost:8000/events
@@ -48,112 +32,6 @@ Content-Type: application/json
   "organization_id": 2
 }
 
-###
-
-### Update an existing event
-PUT http://localhost:8000/events/1
-Content-Type: application/json
-
-{
-  "title": "Beach Cleanup - Extended Hours",
-  "description": "Help clean up the local beach with extended hours for more impact",
-  "max_participants": 25,
-  "proposed_points": 60
-}
-
-###
-
-### Update event status
-PUT http://localhost:8000/events/1
-Content-Type: application/json
-
-{
-  "status": "closed"
-}
-
-###
-
-### Delete an event
-DELETE http://localhost:8000/events/1
-
-###
-
-### Close an event (stop accepting applications)
-POST http://localhost:8000/events/1/close
-
-###
-
-### Get upcoming events
-GET http://localhost:8000/events/upcoming
-    ?limit=5
-
-###
-
-### Get event statistics
-GET http://localhost:8000/stats/events
-
-###
-
-### Test validation - Invalid dates (end before start)
-POST http://localhost:8000/events
-Content-Type: application/json
-
-{
-  "title": "Invalid Date Event",
-  "description": "This should fail validation",
-  "date_start": "2024-01-15T14:00:00",
-  "date_end": "2024-01-15T10:00:00",
-  "difficulty": "easy",
-  "duration_minutes": 120,
-  "proposed_points": 20,
-  "organization_id": 1
-}
-
-###
-
-### Test validation - Negative points
-POST http://localhost:8000/events
-Content-Type: application/json
-
-{
-  "title": "Negative Points Event",
-  "description": "This should fail points validation",
-  "date_start": "2024-01-15T10:00:00",
-  "date_end": "2024-01-15T12:00:00",
-  "difficulty": "easy",
-  "duration_minutes": 120,
-  "proposed_points": -10,
-  "organization_id": 1
-}
-
-###
-
-### Test validation - Missing required fields
-POST http://localhost:8000/events
-Content-Type: application/json
-
-{
-  "title": "Incomplete Event",
-  "description": "Missing required fields"
-}
-
-###
-
-### Get events by organization
-GET http://localhost:8000/events
-    ?organization_id=1
-    &status=open
-
-###
-
-### Get events by difficulty level
-GET http://localhost:8000/events
-    ?difficulty=hard
-    &skip=0
-    &limit=5
-
-###
-
 ### Create a high-difficulty event
 POST http://localhost:8000/events
 Content-Type: application/json
@@ -171,7 +49,16 @@ Content-Type: application/json
   "organization_id": 3
 }
 
-###
+### Update an existing event
+PUT http://localhost:8000/events/1
+Content-Type: application/json
+
+{
+  "title": "Beach Cleanup - Extended Hours",
+  "description": "Help clean up the local beach with extended hours for more impact",
+  "max_participants": 25,
+  "proposed_points": 60
+}
 
 ### Partial update with only some fields
 PUT http://localhost:8000/events/2
@@ -181,8 +68,6 @@ Content-Type: application/json
   "location": "New Food Bank Location, 456 Oak Ave",
   "max_participants": 25
 }
-
-###
 
 ### Update with all optional fields
 PUT http://localhost:8000/events/3
@@ -201,3 +86,17 @@ Content-Type: application/json
   "max_participants": 12,
   "status": "open"
 }
+
+### Update event status
+PUT http://localhost:8000/events/1
+Content-Type: application/json
+
+{
+  "status": "closed"
+}
+
+### Close an event (stop accepting applications)
+POST http://localhost:8000/events/1/close
+
+### Delete an event
+DELETE http://localhost:8000/events/1
