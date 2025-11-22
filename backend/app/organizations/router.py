@@ -1,46 +1,53 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from ..database import get_db
-from . import service
-from .schema import OrganizationCreate, OrganizationRead, OrganizationUpdate
-
+from backend.app.database import get_db
+from backend.app.organizations.service import OrganizationService
+from backend.app.organizations.schema import (
+    OrganizationCreate,
+    OrganizationUpdate,
+    OrganizationInDB,
+    OrganizationOut,
+    OrganizationListOut
+)
 
 router = APIRouter(prefix="/organizations", tags=["Organizations"])
 
 
-@router.post("/", response_model=OrganizationRead, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=OrganizationOut, status_code=201)
 def create_organization(data: OrganizationCreate, db: Session = Depends(get_db)):
-    return service.create_organization(db, data)
+    item = OrganizationService.create_organization(db, data)
+    return {"success": True, "data": item}
 
 
-@router.get("/", response_model=list[OrganizationRead])
+@router.get("/", response_model=OrganizationListOut)
 def list_organizations(db: Session = Depends(get_db)):
-    return service.get_organizations(db)
+    items = OrganizationService.get_organizations(db)
+    return {"success": True, "data": items, "total": len(items)}
 
 
-@router.get("/{organization_id}", response_model=OrganizationRead)
+@router.get("/{organization_id}", response_model=OrganizationOut)
 def get_organization(organization_id: int, db: Session = Depends(get_db)):
-    organization = service.get_organization(db, organization_id)
-    if not organization:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Organization not found")
+    item = OrganizationService.get_organization(db, organization_id)
+    if not item:
+        raise HTTPException(status_code=404, detail="Organization not found")
 
-    return organization
+    return {"success": True, "data": item}
 
 
-@router.patch("/{organization_id}", response_model=OrganizationRead)
+@router.patch("/{organization_id}", response_model=OrganizationOut)
 def update_organization(organization_id: int, data: OrganizationUpdate, db: Session = Depends(get_db)):
-    organization = service.update_organization(db, organization_id, data)
-    if not organization:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Organization not found")
+    item = OrganizationService.update_organization(db, organization_id, data)
+    if not item:
+        raise HTTPException(status_code=404, detail="Organization not found")
 
-    return organization
+    return {"success": True, "data": item}
 
 
-@router.delete("/{organization_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/{organization_id}", response_model=dict)
 def delete_organization(organization_id: int, db: Session = Depends(get_db)):
-    success = service.delete_organization(db, organization_id)
+    success = OrganizationService.delete_organization(db, organization_id)
     if not success:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Organization not found")
+        raise HTTPException(status_code=404, detail="Organization not found")
 
-    return None
+    return {"success": True, "message": "Organization deleted successfully"}

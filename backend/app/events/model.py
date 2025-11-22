@@ -5,8 +5,8 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from ..database import Base
 
-class Opportunity(Base):
-    __tablename__ = 'opportunities'
+class Event(Base):
+    __tablename__ = 'events'
 
     id = Column(Integer, primary_key=True, index = True, autoincrement=True)
     organization_id = Column(Integer, ForeignKey('organizations.id'), nullable = False)
