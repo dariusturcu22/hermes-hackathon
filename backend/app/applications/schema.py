@@ -28,7 +28,7 @@ class ApplicationInDB(ApplicationBase):
     updated_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class ApplicationWithDetails(ApplicationInDB):
     user_name: str

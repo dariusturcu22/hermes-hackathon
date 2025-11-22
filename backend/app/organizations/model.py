@@ -15,4 +15,4 @@ class Organization(Base):
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
 
     owner = relationship("User", back_populates="organizations")
-    opportunities = relationship("Opportunity", back_populates="organization", cascade="all, delete-orphan")
+    opportunities = relationship("Event", back_populates="organization", cascade="all, delete-orphan")

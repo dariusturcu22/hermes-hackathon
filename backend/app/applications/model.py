@@ -24,4 +24,4 @@ class Application(Base):
 
     # Relationships
     user = relationship("User", back_populates="applications")
-    opportunity = relationship("Opportunity", back_populates="applications")
+    opportunity = relationship("Event", back_populates="applications")

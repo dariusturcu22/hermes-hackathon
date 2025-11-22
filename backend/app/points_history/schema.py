@@ -16,7 +16,7 @@ class PointsHistoryRead(PointsHistoryBase):
     created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 class PointsHistoryUpdate(BaseModel):
     user_id: Optional[int] = None
