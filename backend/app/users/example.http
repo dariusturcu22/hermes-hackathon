@@ -1,9 +1,5 @@
-### GET request to example server
-GET https://examples.http-client.intellij.net/get
-    ?generated-in=PyCharm
-
 ### Create user
-PUT http://localhost:8000/users/
+POST http://localhost:8000/users/
 Content-Type: application/json
 
 {
@@ -33,4 +29,3 @@ Content-Type: application/json
 
 ### Delete user
 DELETE http://localhost:8000/users/1
-
