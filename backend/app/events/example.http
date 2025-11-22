@@ -1,5 +1,5 @@
 ### Get all events with filtering
-GET http://localhost:8000/api/v1/events
+GET http://localhost:8000/events
     ?status=open
     &difficulty=easy
     &skip=0
@@ -8,12 +8,12 @@ GET http://localhost:8000/api/v1/events
 ###
 
 ### Get a specific event by ID
-GET http://localhost:8000/api/v1/events/1
+GET http://localhost:8000/events/1
 
 ###
 
 ### Create a new event
-POST http://localhost:8000/api/v1/events
+POST http://localhost:8000/events
 Content-Type: application/json
 
 {
@@ -32,7 +32,7 @@ Content-Type: application/json
 ###
 
 ### Create another event example
-POST http://localhost:8000/api/v1/events
+POST http://localhost:8000/events
 Content-Type: application/json
 
 {
@@ -51,7 +51,7 @@ Content-Type: application/json
 ###
 
 ### Update an existing event
-PUT http://localhost:8000/api/v1/events/1
+PUT http://localhost:8000/events/1
 Content-Type: application/json
 
 {
@@ -64,7 +64,7 @@ Content-Type: application/json
 ###
 
 ### Update event status
-PUT http://localhost:8000/api/v1/events/1
+PUT http://localhost:8000/events/1
 Content-Type: application/json
 
 {
@@ -74,28 +74,28 @@ Content-Type: application/json
 ###
 
 ### Delete an event
-DELETE http://localhost:8000/api/v1/events/1
+DELETE http://localhost:8000/events/1
 
 ###
 
 ### Close an event (stop accepting applications)
-POST http://localhost:8000/api/v1/events/1/close
+POST http://localhost:8000/events/1/close
 
 ###
 
 ### Get upcoming events
-GET http://localhost:8000/api/v1/events/upcoming
+GET http://localhost:8000/events/upcoming
     ?limit=5
 
 ###
 
 ### Get event statistics
-GET http://localhost:8000/api/v1/stats/events
+GET http://localhost:8000/stats/events
 
 ###
 
 ### Test validation - Invalid dates (end before start)
-POST http://localhost:8000/api/v1/events
+POST http://localhost:8000/events
 Content-Type: application/json
 
 {
@@ -112,7 +112,7 @@ Content-Type: application/json
 ###
 
 ### Test validation - Negative points
-POST http://localhost:8000/api/v1/events
+POST http://localhost:8000/events
 Content-Type: application/json
 
 {
@@ -129,7 +129,7 @@ Content-Type: application/json
 ###
 
 ### Test validation - Missing required fields
-POST http://localhost:8000/api/v1/events
+POST http://localhost:8000/events
 Content-Type: application/json
 
 {
@@ -140,14 +140,14 @@ Content-Type: application/json
 ###
 
 ### Get events by organization
-GET http://localhost:8000/api/v1/events
+GET http://localhost:8000/events
     ?organization_id=1
     &status=open
 
 ###
 
 ### Get events by difficulty level
-GET http://localhost:8000/api/v1/events
+GET http://localhost:8000/events
     ?difficulty=hard
     &skip=0
     &limit=5
@@ -155,7 +155,7 @@ GET http://localhost:8000/api/v1/events
 ###
 
 ### Create a high-difficulty event
-POST http://localhost:8000/api/v1/events
+POST http://localhost:8000/events
 Content-Type: application/json
 
 {
@@ -174,7 +174,7 @@ Content-Type: application/json
 ###
 
 ### Partial update with only some fields
-PUT http://localhost:8000/api/v1/events/2
+PUT http://localhost:8000/events/2
 Content-Type: application/json
 
 {
@@ -185,7 +185,7 @@ Content-Type: application/json
 ###
 
 ### Update with all optional fields
-PUT http://localhost:8000/api/v1/events/3
+PUT http://localhost:8000/events/3
 Content-Type: application/json
 
 {
