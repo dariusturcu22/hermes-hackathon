@@ -8,22 +8,23 @@ import Link from "next/link";
 import {useTheme} from "../ThemeProvider";
 
 export default function Navbar() {
-    const { dark, toggleDark } = useTheme();
+    const {dark, toggleDark} = useTheme();
 
     const [mobileOpen, setMobileOpen] = useState(false);
 
     return (
-        <div >
+        <div>
             <nav
                 className={`fixed top-0 left-0 z-50
-    h-16 w-full 
-    flex justify-between items-center 
-    px-6 py-0 
-    backdrop-blur-xl 
-    border-b border-white/10 
+    h-16 w-full
+    flex justify-between items-center
+    px-6 py-0
+    backdrop-blur-xl
+    border-b border-[var(--color-secondary)]/20
     transition-all
-    ${dark ? "bg-gray-950/80 text-white" : "bg-gray-100/80 text-black"}
-                }`}
+
+    bg-[var(--color-navbar)] bg-opacity-80
+    text-[var(--color-text)]`}
             >
                 {/* LEFT SIDE */}
                 <div className="flex items-center gap-6">
@@ -73,7 +74,12 @@ export default function Navbar() {
                                 <ChevronDown className="w-4 h-4 opacity-70"/>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent
-                                className="bg-gray-900/90 text-white border border-white/10 backdrop-blur-xl rounded-xl">
+                                className=" bg-[var(--color-navbar)]
+                                            text-[var(--color-text)]
+                                            border border-[var(--color-secondary)]/20
+                                            backdrop-blur-xl
+                                            rounded-xl
+                                            shadow-lg">
                                 <DropdownMenuItem asChild>
                                     <Link href="/profile">Profile</Link>
                                 </DropdownMenuItem>
@@ -95,7 +101,6 @@ export default function Navbar() {
                     </button>
 
 
-                    {/* DARK MODE TOGGLE */}
                     <button
                         onClick={toggleDark}
                         className="text-xl px-4 py-2 rounded-xl backdrop-blur-xl bg-white/10 border border-white/20 hover:bg-white/20 transition hidden lg:block"
@@ -105,17 +110,21 @@ export default function Navbar() {
 
                 </div>
             </nav>
-            {/* MOBILE MENU DROPDOWN */}
+
             {mobileOpen && (
                 <div className="lg:hidden bg-gray-950 border-b border-white/10 text-white px-6 py-4 space-y-4">
                     <Link href="/profile" className="block py-2 hover:opacity-80">
                         Profile
                     </Link>
+                    <Link href="/dashboard" className="block py-2 hover:opacity-80">
+                        Dashboard
+                    </Link>
                     <Link href="/settings" className="block py-2 hover:opacity-80">
                         Settings
                     </Link>
+
                     <button
-                        onClick={() => setDark(!dark)}
+                        onClick={toggleDark}
                         className="w-full text-left py-2 hover:opacity-80"
                     >
                         Toggle: {dark ? "Light Mode" : "Dark Mode"}

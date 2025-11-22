@@ -73,7 +73,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <main className="min-h-[calc(100vh-80px)] flex items-center justify-center px-6 py-10">
+    <main className=" bg-[var(--color-bg)] text-[var(--color-text)] min-h-[calc(100vh-80px)] flex items-center justify-center px-6 py-10">
       <div
         className="
           w-full max-w-2xl
@@ -83,7 +83,7 @@ export default function SettingsPage() {
           shadow-xl
         "
       >
-        <h1 className="text-3xl font-bold mb-8 text-center dark:text-white">
+        <h1 className="text-3xl font-bold mb-8 text-center dark:text-white ">
           Settings
         </h1>
 
@@ -166,9 +166,10 @@ export default function SettingsPage() {
             className="
               w-full px-6 py-3
               rounded-xl font-semibold
-              bg-black text-white
-              hover:bg-gray-800
+              hover:bg-[var(--color-primary)] hover:bg-opacity-50
+              hover:bg-[var(--color-accent)]
               transition shadow active:scale-95
+
             "
           >
             Save Changes
@@ -192,7 +193,7 @@ export default function SettingsPage() {
         </div>
 
         {/* LOG OUT BUTTON */}
-        <div className="mt-6 text-center">
+        <div className="mt-6 text-center ">
           <button
             onClick={() => {
               console.log("User logged out");
@@ -202,7 +203,7 @@ export default function SettingsPage() {
             className="
               px-6 py-3
               rounded-xl
-              bg-red-600 text-white
+              bg-[var(--color-accent)]
               font-semibold
               shadow
               hover:bg-red-700

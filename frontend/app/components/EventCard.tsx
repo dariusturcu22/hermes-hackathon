@@ -38,17 +38,17 @@ export default function EventCard({
         shadow-lg hover:shadow-xl transition
       "
         >
-            <div className="relative w-full h-72">
+            <div className="relative w-full h-72 bg-[var(--color-card)] border border-[var(--color-secondary)]">
                 <Image src={displayImage} alt={title} fill className="object-cover"/>
             </div>
 
-            <div className="px-6 pt-5 pb-6">
+            <div className="px-6 pt-5 pb-6 bg-[var(--color-bg-medium2)]">
                 <h2 className="text-xl font-bold mb-2">{title}</h2>
-                <p className="text-sm text-gray-600 dark:text-gray-300">{location}</p>
-                <p className="text-sm text-gray-600 dark:text-gray-300">
+                <p className="text-sm text-[var(--color-text)]">{location}</p>
+                <p className="text-sm text-[var(--color-text)]">
                     {time}, {date}
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+                <p className="text-xs text-[var(--color-text)] mt-2">
                     Organized by <span className="font-semibold">{organization_name}</span>
                 </p>
             </div>

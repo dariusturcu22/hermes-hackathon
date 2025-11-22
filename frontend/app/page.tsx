@@ -6,7 +6,7 @@ import SignupButton from "./components/SignupButton";
 
 export default function LandingPage() {
   return (
-    <main className="min-h-screen flex flex-col lg:flex-row items-center justify-center px-8 gap-16 pt-20">
+    <main className="  min-h-screen flex flex-col lg:flex-row items-center justify-center px-8 gap-16 pt-20">
 
       {/* LEFT SIDE - IMAGE */}
       <div className="w-full lg:w-1/2 flex justify-center">
