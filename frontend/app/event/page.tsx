@@ -1,73 +1,21 @@
-import Image from "next/image";
-import {notFound} from "next/navigation";
-import {events} from "../mockData/events";
+export default function GenericEventPage() {
+  return (
+    <main className="max-w-3xl mx-auto px-6 py-20">
+      <h1 className="text-4xl font-bold mb-6 dark:text-white">
+        Event Details
+      </h1>
 
-export default function EventPage({ params,
-                                  }: {
-    params: { slug: string };
-}) {
+      <p className="text-lg dark:text-gray-300">
+        This is a generic event page that all events lead to.
+      </p>
 
+      <p className="mt-4 text-gray-500 dark:text-gray-400">
+        Later you can add dynamic data or different content here.
+      </p>
 
-    const event = events.find(e => e.slug === params.slug);
-    if (!event) {
-        return notFound();
-    }
-
-    return (
-        <div className="max-w-4xl mx-auto px-6 py-10">
-
-            {/* IMAGE */}
-            <div className="relative w-full h-72 sm:h-96 rounded-2xl overflow-hidden shadow-lg">
-                <Image
-                    src={event.image}
-                    alt={event.title}
-                    fill
-                    className="object-cover"
-                />
-            </div>
-
-            {/* TITLE */}
-            <h1 className="text-4xl font-bold mt-8">{event.title}</h1>
-
-            {/* ORGANIZER */}
-            <p className="text-gray-600 dark:text-gray-300 text-lg mt-2">
-                Organized by <span className="font-semibold">{event.organizer}</span>
-            </p>
-
-            {/* DETAILS ROW */}
-            <div className="flex flex-col sm:flex-row gap-6 mt-6 text-gray-700 dark:text-gray-300">
-
-                <div>
-                    <p className="font-semibold">📍 Location</p>
-                    <p>{event.location}</p>
-                </div>
-
-                <div>
-                    <p className="font-semibold">🕒 Time</p>
-                    <p>{event.time}</p>
-                </div>
-
-                {"date" in event && (
-                    <div>
-                        <p className="font-semibold">📅 Date</p>
-                        <p>{event.date}</p>
-                    </div>
-                )}
-            </div>
-
-            {/* DESCRIPTION */}
-            <div className="mt-10">
-                <h2 className="text-2xl font-semibold mb-3">About this event</h2>
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
-                    {event.description}
-                </p>
-            </div>
-
-            {/* ACTION BUTTON */}
-            <button
-                className="mt-10 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-md transition">
-                Join Event
-            </button>
-        </div>
-    );
+      <button className="mt-10 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl shadow-md transition">
+        Join Event
+      </button>
+    </main>
+  );
 }

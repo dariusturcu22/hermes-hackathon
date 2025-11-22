@@ -40,7 +40,7 @@ export default function HomePage() {
         "
         >
             {filteredEvents.map((event) => (
-                <EventCard key={event.slug} {...event} />
+                <EventCard date={""} key={event.id} {...event} />
             ))}
       </div>
     </main>
