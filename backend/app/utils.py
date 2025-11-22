@@ -1,8 +1,8 @@
 from typing import Optional
 
 import jwt
-from fastapi import Depends, HTTPException, status # 👈 new imports
-from fastapi.security import SecurityScopes, HTTPAuthorizationCredentials, HTTPBearer # 👈 new imports
+from fastapi import Depends, HTTPException, status
+from fastapi.security import SecurityScopes, HTTPAuthorizationCredentials, HTTPBearer
 
 from config import get_settings
 
@@ -13,11 +13,9 @@ class UnauthorizedException(HTTPException):
 
 class UnauthenticatedException(HTTPException):
     def __init__(self):
-        super().__init__(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Requires authentication"
-        )
+        super().__init__(status_code=status.HTTP_401_UNAUTHORIZED, detail="Requires authentication")
 
-# 👇 new code
+
 class VerifyToken:
     """Does all the token verification using PyJWT"""
     def __init__(self):

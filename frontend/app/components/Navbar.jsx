@@ -18,7 +18,7 @@ export default function Navbar() {
                 {/* LEFT SIDE */}
                 <div className="flex items-center gap-6">
                     {/* LOGO - hidden on small screens */}
-                    <div className="font-bold text-xl tracking-tight hidden lg:block">name</div>
+                    <div className="font-bold text-xl tracking-tight hidden lg:block">VoW</div>
 
 
 
@@ -34,7 +34,7 @@ export default function Navbar() {
                 </div>
 
                 {/* RIGHT SIDE */}
-                <div className="flex items-center gap-4">
+                 <div className="flex items-center gap-4">
                     <div className="text-sm font-medium">Hello name</div>
                     <div
                         className="text-sm font-medium px-3 py-1 rounded-xl backdrop-blur-xl bg-white/10 border border-white/20">0
@@ -42,7 +42,7 @@ export default function Navbar() {
                     </div>
                     {/* ON DESKTOP show avatar + dropdown */}
                     <div className="hidden lg:flex items-center gap-4">
-                        <div className="text-sm font-medium">Hello name</div>
+
                         {/* PROFILE DROPDOWN */}
                         <DropdownMenu>
                             <DropdownMenuTrigger className="flex items-center gap-2 cursor-pointer select-none">
@@ -66,7 +66,7 @@ export default function Navbar() {
 
                     {/* MOBILE MENU BUTTON */}
                     <button
-                        className="lg:hudden p-2 rounded-lg bg-white/10 border border-white/20"
+                        className="lg:hidden p-2 rounded-lg bg-white/10 border border-white/20"
                         onClick={() => setMobileOpen(!mobileOpen)}>
                         <Menu className="w-6 h-6"/>
                     </button>
