@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from backend.app.database import get_db
-from backend.app.organizations.service import OrganizationService
-from backend.app.organizations.schema import (
+from ..database import get_db
+from ..organizations.service import OrganizationService
+from ..organizations.schema import (
     OrganizationCreate,
     OrganizationUpdate,
     OrganizationOut,

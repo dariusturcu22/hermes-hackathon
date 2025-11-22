@@ -3,11 +3,11 @@ from sqlalchemy import and_, func, desc
 from typing import List, Optional, Tuple
 from datetime import datetime
 
-from backend.app.applications.model import Application
-from backend.app.applications.schema import ApplicationCreate, ApplicationStatus
-from backend.app.users.model import User
-from backend.app.events.model import Event
-from backend.app.organizations.model import Organization
+from ..applications.model import Application
+from ..applications.schema import ApplicationCreate, ApplicationStatus
+from ..users.model import User
+from ..events.model import Event
+from ..organizations.model import Organization
 
 
 class ApplicationService:
