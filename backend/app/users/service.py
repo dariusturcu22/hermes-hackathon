@@ -19,7 +19,7 @@ class UserService:
         return user
 
     @staticmethod
-    def list_users(db: Session):
+    def get_users(db: Session):
         return db.query(User).all()
 
     @staticmethod

@@ -6,7 +6,6 @@ from backend.app.users.service import UserService
 from backend.app.users.schema import (
     UserCreate,
     UserUpdate,
-    UserInDB,
     UserOut,
     UserListOut
 )
