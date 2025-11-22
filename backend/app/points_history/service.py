@@ -22,7 +22,7 @@ def get_points_history_by_id(db: Session, entry_id: int):
 def update_points_history(db: Session, entry_id: int, data: PointsHistoryUpdate):
     points_entry = get_points_history_by_id(db, entry_id)
     if not points_entry:
-        return False
+        return None
 
     update_data = data.model_dump(exclude_unset=True)
     for key, value in update_data.items():
