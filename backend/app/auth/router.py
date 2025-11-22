@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Security, APIRouter, HTTPException, Depends
+from fastapi import Security, APIRouter, HTTPException, Depends
 from fastapi.security import OAuth2PasswordRequestForm
 import requests
 
@@ -30,7 +30,7 @@ def signup(email: str, password: str):
     """Register a new user in Auth0"""
     url = f"https://{get_settings().auth0_domain}/dbconnections/signup"
     payload = {
-        "client_id": "OvOVSlajKYTrjfqTYNRgrjOaScmFqbOJ",
+        "client_id": get_settings().auth0_client_id,
         "email": email,
         "password": password,
         "connection": "Username-Password-Authentication"
@@ -52,8 +52,8 @@ def login(form_data: OAuth2PasswordRequestForm = Depends()):
         "username": form_data.username,
         "password": form_data.password,
         "audience": get_settings().auth0_api_audience,
-        "client_id": "OvOVSlajKYTrjfqTYNRgrjOaScmFqbOJ",
-        "client_secret": "1itdk8AhHcUwFoNik_W-rDepYK1izswKlExKkamF8gcBNrpSOD3ueGLgyO7ZVQLM"
+        "client_id": get_settings().auth0_client_id,
+        "client_secret": get_settings().auth0_client_secret
     }
 
     response = requests.post(url, json=payload)
