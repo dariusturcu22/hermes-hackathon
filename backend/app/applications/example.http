@@ -1,0 +1,257 @@
+### Get all applications with filtering
+GET http://localhost:8000/api/v1/applications
+    ?status=pending
+    &user_id=1
+    &skip=0
+    &limit=10
+
+###
+
+### Get applications for a specific opportunity
+GET http://localhost:8000/api/v1/applications
+    ?opportunity_id=1
+    &status=accepted
+
+###
+
+### Get applications for a specific organization
+GET http://localhost:8000/api/v1/applications
+    ?organization_id=1
+
+###
+
+### Get a specific application by ID
+GET http://localhost:8000/api/v1/applications/1
+
+###
+
+### Create a new application (volunteer applies to opportunity)
+POST http://localhost:8000/api/v1/applications
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "opportunity_id": 1
+}
+
+###
+
+### Create another application
+POST http://localhost:8000/api/v1/applications
+Content-Type: application/json
+
+{
+  "user_id": 2,
+  "opportunity_id": 1
+}
+
+###
+
+### Update application status
+PUT http://localhost:8000/api/v1/applications/1
+Content-Type: application/json
+
+{
+  "status": "accepted"
+}
+
+###
+
+### Accept an application (specific endpoint)
+POST http://localhost:8000/api/v1/applications/1/accept
+
+###
+
+### Reject an application
+POST http://localhost:8000/api/v1/applications/2/reject
+
+###
+
+### Mark application as completed (volunteer attended)
+POST http://localhost:8000/api/v1/applications/1/complete
+
+###
+
+### Mark application as no-show (volunteer didn't attend)
+POST http://localhost:8000/api/v1/applications/3/no-show
+
+###
+
+### Delete an application
+DELETE http://localhost:8000/api/v1/applications/1
+
+###
+
+### Get application statistics
+GET http://localhost:8000/api/v1/stats/applications
+
+###
+
+### Get application statistics for a specific user
+GET http://localhost:8000/api/v1/stats/applications
+    ?user_id=1
+
+###
+
+### Get application counts for an opportunity
+GET http://localhost:8000/api/v1/opportunities/1/applications/count
+
+###
+
+### Check if user can apply to an opportunity
+GET http://localhost:8000/api/v1/applications/check-eligibility
+    ?user_id=1
+    &opportunity_id=1
+
+###
+
+### Test application limit - try to apply to same opportunity twice
+POST http://localhost:8000/api/v1/applications
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "opportunity_id": 1
+}
+
+###
+
+### Test applying to closed opportunity
+POST http://localhost:8000/api/v1/applications
+Content-Type: application/json
+
+{
+  "user_id": 3,
+  "opportunity_id": 5
+}
+
+###
+
+### Get applications with different statuses
+GET http://localhost:8000/api/v1/applications
+    ?status=completed
+
+###
+
+### Get pending applications for user
+GET http://localhost:8000/api/v1/applications
+    ?user_id=1
+    &status=pending
+
+###
+
+### Update multiple applications status in sequence
+### First, accept application
+POST http://localhost:8000/api/v1/applications/4/accept
+
+###
+
+### Then mark as completed after event
+POST http://localhost:8000/api/v1/applications/4/complete
+
+###
+
+### Test invalid status update
+PUT http://localhost:8000/api/v1/applications/1
+Content-Type: application/json
+
+{
+  "status": "invalid_status"
+}
+
+###
+
+### Get applications with pagination
+GET http://localhost:8000/api/v1/applications
+    ?skip=10
+    &limit=5
+
+###
+
+### Create application for different opportunity
+POST http://localhost:8000/api/v1/applications
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "opportunity_id": 2
+}
+
+###
+
+### Bulk status update simulation
+### First application
+POST http://localhost:8000/api/v1/applications/5/accept
+
+###
+
+### Second application
+POST http://localhost:8000/api/v1/applications/6/accept
+
+###
+
+### Third application
+POST http://localhost:8000/api/v1/applications/7/reject
+
+###
+
+### Get all accepted applications for opportunity
+GET http://localhost:8000/api/v1/applications
+    ?opportunity_id=1
+    &status=accepted
+
+###
+
+### Test application with non-existent user
+POST http://localhost:8000/api/v1/applications
+Content-Type: application/json
+
+{
+  "user_id": 999,
+  "opportunity_id": 1
+}
+
+###
+
+### Test application with non-existent opportunity
+POST http://localhost:8000/api/v1/applications
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "opportunity_id": 999
+}
+
+###
+
+### Get application workflow - from pending to completed
+### 1. Check eligibility
+GET http://localhost:8000/api/v1/applications/check-eligibility
+    ?user_id=4
+    &opportunity_id=3
+
+###
+
+### 2. Apply
+POST http://localhost:8000/api/v1/applications
+Content-Type: application/json
+
+{
+  "user_id": 4,
+  "opportunity_id": 3
+}
+
+###
+
+### 3. Organizer accepts
+POST http://localhost:8000/api/v1/applications/8/accept
+
+###
+
+### 4. After event, mark as completed
+POST http://localhost:8000/api/v1/applications/8/complete
+
+###
+
+### Get final application details
+GET http://localhost:8000/api/v1/applications/8
