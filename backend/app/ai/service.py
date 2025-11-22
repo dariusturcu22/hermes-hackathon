@@ -38,6 +38,7 @@ def get_event_points_recommendation(title, description):
                 "content": title + "\n" + description
             }
         ]
+
     )
 
     score = response.choices[0].message.content
