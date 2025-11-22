@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "user_id": 2,
-  "opportunity_id": 1,
+  "event_id": 1,
   "points_awarded": 50,
   "reason": "Completed volunteer event"
 }

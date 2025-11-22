@@ -1,7 +1,7 @@
-from sqlalchemy import Column, Integer, String, DateTime, func
-from ..database import Base
+from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.orm import relationship
-
+from sqlalchemy.sql import func
+from ..database import Base
 
 class User(Base):
     __tablename__ = "users"
@@ -16,3 +16,4 @@ class User(Base):
 
     applications = relationship("Application", back_populates="user")
     organizations = relationship("Organization", back_populates="owner")
+    points_history = relationship("PointsHistory", back_populates="user")

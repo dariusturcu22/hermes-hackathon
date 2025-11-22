@@ -15,7 +15,7 @@ class ApplicationBase(BaseModel):
 
 class ApplicationCreate(BaseModel):
     user_id: int
-    opportunity_id: int
+    event_id: int
 
 class ApplicationUpdate(BaseModel):
     status: Optional[ApplicationStatus] = None
@@ -23,7 +23,7 @@ class ApplicationUpdate(BaseModel):
 class ApplicationInDB(ApplicationBase):
     id: int
     user_id: int
-    opportunity_id: int
+    event_id: int
     applied_at: datetime
     updated_at: datetime
 
@@ -33,9 +33,9 @@ class ApplicationInDB(ApplicationBase):
 class ApplicationWithDetails(ApplicationInDB):
     user_name: str
     user_email: str
-    opportunity_title: str
+    event_title: str
     organization_name: str
-    opportunity_final_points: int
+    event_final_points: int
 
 class ApplicationResponse(BaseModel):
     success: bool
