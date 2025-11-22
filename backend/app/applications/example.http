@@ -7,9 +7,9 @@ GET http://localhost:8000/applications
 
 ###
 
-### Get applications for a specific opportunity
+### Get applications for a specific event
 GET http://localhost:8000/applications
-    ?opportunity_id=1
+    ?event_id=1
     &status=accepted
 
 ###
@@ -25,13 +25,13 @@ GET http://localhost:8000/applications/1
 
 ###
 
-### Create a new application (volunteer applies to opportunity)
+### Create a new application (volunteer applies to event)
 POST http://localhost:8000/applications
 Content-Type: application/json
 
 {
   "user_id": 1,
-  "opportunity_id": 1
+  "event_id": 1
 }
 
 ###
@@ -42,7 +42,7 @@ Content-Type: application/json
 
 {
   "user_id": 2,
-  "opportunity_id": 1
+  "event_id": 1
 }
 
 ###
@@ -93,36 +93,36 @@ GET http://localhost:8000/stats/applications
 
 ###
 
-### Get application counts for an opportunity
+### Get application counts for an event
 GET http://localhost:8000/opportunities/1/applications/count
 
 ###
 
-### Check if user can apply to an opportunity
+### Check if user can apply to an event
 GET http://localhost:8000/applications/check-eligibility
     ?user_id=1
-    &opportunity_id=1
+    &event_id=1
 
 ###
 
-### Test application limit - try to apply to same opportunity twice
+### Test application limit - try to apply to same event twice
 POST http://localhost:8000/applications
 Content-Type: application/json
 
 {
   "user_id": 1,
-  "opportunity_id": 1
+  "event_id": 1
 }
 
 ###
 
-### Test applying to closed opportunity
+### Test applying to closed event
 POST http://localhost:8000/applications
 Content-Type: application/json
 
 {
   "user_id": 3,
-  "opportunity_id": 5
+  "event_id": 5
 }
 
 ###
@@ -168,13 +168,13 @@ GET http://localhost:8000/applications
 
 ###
 
-### Create application for different opportunity
+### Create application for different event
 POST http://localhost:8000/applications
 Content-Type: application/json
 
 {
   "user_id": 1,
-  "opportunity_id": 2
+  "event_id": 2
 }
 
 ###
@@ -195,9 +195,9 @@ POST http://localhost:8000/applications/7/reject
 
 ###
 
-### Get all accepted applications for opportunity
+### Get all accepted applications for event
 GET http://localhost:8000/applications
-    ?opportunity_id=1
+    ?event_id=1
     &status=accepted
 
 ###
@@ -208,18 +208,18 @@ Content-Type: application/json
 
 {
   "user_id": 999,
-  "opportunity_id": 1
+  "event_id": 1
 }
 
 ###
 
-### Test application with non-existent opportunity
+### Test application with non-existent event
 POST http://localhost:8000/applications
 Content-Type: application/json
 
 {
   "user_id": 1,
-  "opportunity_id": 999
+  "event_id": 999
 }
 
 ###
@@ -228,7 +228,7 @@ Content-Type: application/json
 ### 1. Check eligibility
 GET http://localhost:8000/applications/check-eligibility
     ?user_id=4
-    &opportunity_id=3
+    &event_id=3
 
 ###
 
@@ -238,7 +238,7 @@ Content-Type: application/json
 
 {
   "user_id": 4,
-  "opportunity_id": 3
+  "event_id": 3
 }
 
 ###

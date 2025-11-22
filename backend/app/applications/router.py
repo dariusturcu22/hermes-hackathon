@@ -22,7 +22,7 @@ def get_applications(
         skip: int = 0,
         limit: int = 100,
         user_id: Optional[int] = Query(None),
-        opportunity_id: Optional[int] = Query(None),
+        event_id: Optional[int] = Query(None),
         organization_id: Optional[int] = Query(None),
         status: Optional[ApplicationStatus] = Query(None),
         db: Session = Depends(get_db)
@@ -30,7 +30,7 @@ def get_applications(
     """Get all applications with detailed information"""
     applications = ApplicationService.get_applications_with_details(
         db, skip=skip, limit=limit, user_id=user_id,
-        opportunity_id=opportunity_id, organization_id=organization_id, status=status
+        event_id=event_id, organization_id=organization_id, status=status
     )
 
     return {
@@ -44,7 +44,7 @@ def get_applications(
 def get_application(application_id: int, db: Session = Depends(get_db)):
     """Get a specific application by ID with details"""
     applications = ApplicationService.get_applications_with_details(
-        db, limit=1, opportunity_id=application_id
+        db, limit=1, event_id=application_id
     )
 
     if not applications:
@@ -61,14 +61,14 @@ def get_application(application_id: int, db: Session = Depends(get_db)):
 
 @router.post("/applications", response_model=ApplicationResponse, status_code=status.HTTP_201_CREATED)
 def create_application(application: ApplicationCreate, db: Session = Depends(get_db)):
-    """Create a new application (volunteer applies to opportunity)"""
-    # Check if user can apply to this opportunity
-    if not ApplicationService.can_apply_to_opportunity(
-            db, application.user_id, application.opportunity_id
+    """Create a new application (volunteer applies to event)"""
+    # Check if user can apply to this event
+    if not ApplicationService.can_apply_to_event(
+            db, application.user_id, application.event_id
     ):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Cannot apply to this opportunity. Already applied, opportunity closed, or full."
+            detail="Cannot apply to this event. Already applied, event closed, or full."
         )
 
     db_application = ApplicationService.create_application(db, application)
@@ -213,15 +213,15 @@ def get_application_stats(
     }
 
 
-@router.get("/opportunities/{opportunity_id}/applications/count")
-def get_opportunity_applications_count(opportunity_id: int, db: Session = Depends(get_db)):
-    """Get application counts for an opportunity"""
-    total, accepted = ApplicationService.get_opportunity_applications_count(db, opportunity_id)
+@router.get("/opportunities/{event_id}/applications/count")
+def get_event_applications_count(event_id: int, db: Session = Depends(get_db)):
+    """Get application counts for an event"""
+    total, accepted = ApplicationService.get_event_applications_count(db, event_id)
 
     return {
         "success": True,
         "data": {
-            "opportunity_id": opportunity_id,
+            "event_id": event_id,
             "total_applications": total,
             "accepted_applications": accepted
         }
@@ -231,17 +231,17 @@ def get_opportunity_applications_count(opportunity_id: int, db: Session = Depend
 @router.get("/applications/check-eligibility")
 def check_application_eligibility(
         user_id: int = Query(...),
-        opportunity_id: int = Query(...),
+        event_id: int = Query(...),
         db: Session = Depends(get_db)
 ):
-    """Check if a user can apply to an opportunity"""
-    can_apply = ApplicationService.can_apply_to_opportunity(db, user_id, opportunity_id)
+    """Check if a user can apply to an event"""
+    can_apply = ApplicationService.can_apply_to_event(db, user_id, event_id)
 
     return {
         "success": True,
         "data": {
             "user_id": user_id,
-            "opportunity_id": opportunity_id,
+            "event_id": event_id,
             "can_apply": can_apply
         }
     }

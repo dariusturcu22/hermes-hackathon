@@ -1,11 +1,9 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Boolean, DateTime, func
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime, func
 from sqlalchemy.orm import relationship
 from ..database import Base
 
-
 class Organization(Base):
     __tablename__ = 'organizations'
-
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(128), nullable=False)
     description = Column(String, nullable=False)
@@ -15,4 +13,4 @@ class Organization(Base):
     updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now())
 
     owner = relationship("User", back_populates="organizations")
-    opportunities = relationship("Opportunity", back_populates="organization", cascade="all, delete-orphan")
+    events = relationship("Event", back_populates="organization", cascade="all, delete-orphan")
