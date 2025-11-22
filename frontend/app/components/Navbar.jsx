@@ -5,13 +5,15 @@ import {Home, Trophy, Menu, ChevronDown} from "lucide-react";
 import {Avatar, AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
 import Link from "next/link";
+import {useTheme} from "../ThemeProvider";
 
 export default function Navbar() {
-    const [dark, setDark] = useState(true);
+    const { dark, toggleDark } = useTheme();
+
     const [mobileOpen, setMobileOpen] = useState(false);
 
     return (
-        <div className={dark ? "dark" : ""}>
+        <div >
             <nav
                 className={`fixed top-0 left-0 z-50
     h-16 w-full 
@@ -95,10 +97,12 @@ export default function Navbar() {
 
                     {/* DARK MODE TOGGLE */}
                     <button
-                        onClick={() => setDark(!dark)}
-                        className="text-xl px-4 py-2 rounded-xl backdrop-blur-xl bg-white/10 border border-white/20 hover:bg-white/20 transition hidden lg:block">
+                        onClick={toggleDark}
+                        className="text-xl px-4 py-2 rounded-xl backdrop-blur-xl bg-white/10 border border-white/20 hover:bg-white/20 transition hidden lg:block"
+                    >
                         {dark ? "☀️" : "🌙"}
                     </button>
+
                 </div>
             </nav>
             {/* MOBILE MENU DROPDOWN */}
