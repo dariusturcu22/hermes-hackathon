@@ -35,8 +35,8 @@ export default function HomePage() {
                 {filtered.map((event) => (
                     <EventCard
                         key={event.id}
-                        {...event} // spread all Event props
-                        image={"/placeholder.jpg"} // optional, fallback image
+                        {...event}
+                        image={"/placeholder.jpg"}
                     />
                 ))}
             </div>
