@@ -1,18 +1,25 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
+import {slugify} from "../utils/slugify";
 
 export default function EventCard(
-    { title, location, time, organizer, image }: {
-  title: string;
-  location: string;
-  time: string;
-  organizer: string;
-  image: string;
-}) {
-  return (
-    <div className="
-       w-full
+    {title, location, time, organizer, image}: {
+        title: string;
+        location: string;
+        time: string;
+        organizer: string;
+        image: string;
+    }) {
+
+    const slug = slugify(`${title}-${organizer}`);
+    return (
+    <Link
+      href={`/event/${slug}`}
+      className="
+        block
+        w-full
         max-w-[380px]
         lg:max-w-[420px]
         mx-auto
@@ -20,11 +27,13 @@ export default function EventCard(
         overflow-hidden
         bg-white dark:bg-gray-900
         border border-black/10 dark:border-white/10
-        shadow-lg hover:shadow-xl
+        shadow-lg
+        hover:shadow-xl
         transition
-    ">
+      "
+    >
       {/* IMAGE */}
-      <div className="relative w-full h-72">
+      <div className="relative w-full aspect-square">
         <Image
           src={image}
           alt={title}
@@ -42,6 +51,6 @@ export default function EventCard(
           Organized by <span className="font-semibold">{organizer}</span>
         </p>
       </div>
-    </div>
+    </Link>
   );
 }
