@@ -8,6 +8,7 @@ export default function EventCard({
   title,
   location,
   time,
+    date,
   organizer,
   image,
   slug, // ← Primește slug-ul ca prop
@@ -15,6 +16,7 @@ export default function EventCard({
   title: string;
   location: string;
   time: string;
+  date:string;
   organizer: string;
   image: string;
   slug: string; // ← Adaugă tipul
@@ -49,7 +51,7 @@ export default function EventCard({
       <div className="px-6 pt-5 pb-6">
         <h2 className="text-xl font-bold mb-2">{title}</h2>
         <p className="text-sm text-gray-600 dark:text-gray-300">{location}</p>
-        <p className="text-sm text-gray-600 dark:text-gray-300">{time}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-300">{time}, {date}</p>
         <p className="text-xs text-gray-500 dark:text-gray-400 mt-2"></p>
           Organized by <span className="font-semibold">{organizer}</span>
           <p className="text-xs text-gray-500 dark:text-gray-400 mt-2">

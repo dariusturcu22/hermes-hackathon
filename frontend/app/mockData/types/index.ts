@@ -8,5 +8,7 @@ export type EventItem = {
   organizer: string;
   location: string;
   time: string;
+  date:string
   image: string;
+
 };
