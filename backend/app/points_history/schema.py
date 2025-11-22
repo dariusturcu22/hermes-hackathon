@@ -1,0 +1,25 @@
+from pydantic import BaseModel
+from datetime import datetime
+from typing import Optional
+
+class PointsHistoryBase(BaseModel):
+    user_id: int
+    opportunity_id: int
+    points_awarded: int
+    reason: Optional[str] = None
+
+class PointsHistoryCreate(PointsHistoryBase):
+    pass
+
+class PointsHistoryRead(PointsHistoryBase):
+    id: int
+    created_at: datetime
+
+    class Config:
+        orm_mode = True
+
+class PointsHistoryUpdate(BaseModel):
+    user_id: Optional[int] = None
+    opportunity_id: Optional[int] = None
+    points_awarded: Optional[int] = None
+    reason: Optional[str] = None
