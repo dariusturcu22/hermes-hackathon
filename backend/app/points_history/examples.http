@@ -3,7 +3,7 @@ POST http://localhost:8000/points_history/
 Content-Type: application/json
 
 {
-  "user_id": 3,
+  "user_id": 2,
   "opportunity_id": 12,
   "points_awarded": 50,
   "reason": "Completed volunteer event"
