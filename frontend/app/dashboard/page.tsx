@@ -16,8 +16,10 @@ export default function DashboardPage() {
       image: "/event3.jpg",
       location: "Sunny Beach",
       time: "08:00 - 09:00",
+      date:"2025-01-22",
     },
   ];
+
 
   const companyEvents: EventItem[] = [
     {
@@ -26,6 +28,7 @@ export default function DashboardPage() {
       image: "/event2.jpg",
       location: "City Center",
       time: "14:00 - 16:00",
+      date:"2025-01-20",
     },
   ];
 
@@ -35,6 +38,11 @@ export default function DashboardPage() {
       type: "volunteer", // change to "company" to test
       name: "Alex",
     };
+    const mockCompany: User = {
+      type: "company", // change to "company" to test
+      name: "ONG",
+    };
+
 
       // eslint-disable-next-line react-hooks/set-state-in-effect
     setUser(mockUser);
@@ -43,7 +51,7 @@ export default function DashboardPage() {
   if (!user) return <div className="text-center pt-40">Loading...</div>;
 
   const isVolunteer = user.type === "volunteer";
-  const events = isVolunteer ? volunteerEvents : companyEvents;
+  const events = isVolunteer ? [] : companyEvents;
 
   return (
     <main className="px-6 py-10 max-w-5xl mx-auto">
