@@ -40,4 +40,6 @@ def get_event_points_recommendation(title, description):
         ]
     )
 
-    print("Difficulty Score:", response.choices[0].message.content)
+    score = response.choices[0].message.content
+
+    return score
