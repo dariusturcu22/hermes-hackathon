@@ -13,9 +13,16 @@ export default function Navbar() {
     return (
         <div className={dark ? "dark" : ""}>
             <nav
-                className={`h-16 w-full flex justify-between items-center px-6 py-0 backdrop-blur-xl border-b border-white/10 transition-all ${
-                    dark ? "bg-gray-950 text-white" : "bg-gray-100 text-black"
-                }`}>
+                className={`fixed top-0 left-0 z-50
+    h-16 w-full 
+    flex justify-between items-center 
+    px-6 py-0 
+    backdrop-blur-xl 
+    border-b border-white/10 
+    transition-all
+    ${dark ? "bg-gray-950/80 text-white" : "bg-gray-100/80 text-black"}
+                }`}
+            >
                 {/* LEFT SIDE */}
                 <div className="flex items-center gap-6">
 

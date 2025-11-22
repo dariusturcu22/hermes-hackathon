@@ -43,4 +43,5 @@ Join our community effort to clean the beach and recycle waste.
 Let's make a difference!
     `,
   },
+
 ];

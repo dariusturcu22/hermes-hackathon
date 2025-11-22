@@ -19,17 +19,18 @@ export default function HomePage() {
 
       <h1 className="text-3xl font-bold mb-8 pl-8">Upcoming Volunteering Events</h1>
 
-      <div className="w-full flex justify-end mb-10">
-        <input
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="w-full max-w-md p-3 rounded-xl border border-black/10 dark:border-white/20 dark:bg-gray-900"
-          placeholder="Search events..."
-        />
-      </div>
+        <div className="w-full flex justify-start mb-10 pl-8">
+            <input
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full max-w-md p-3 rounded-xl border border-black/10 dark:border-white/20 dark:bg-gray-900"
+                placeholder="Search events..."
+            />
+        </div>
 
-      <div
-        className="
+
+        <div
+            className="
           grid
           place-items-center
           grid-cols-1
@@ -37,10 +38,10 @@ export default function HomePage() {
           lg:grid-cols-3
           gap-10
         "
-      >
-         {filteredEvents.map((event) => (
-          <EventCard key={event.slug} {...event} />
-        ))}
+        >
+            {filteredEvents.map((event) => (
+                <EventCard key={event.slug} {...event} />
+            ))}
       </div>
     </main>
   );
