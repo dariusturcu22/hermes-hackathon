@@ -3,9 +3,9 @@ from sqlalchemy import func, and_
 from typing import Optional, List
 from datetime import datetime
 
-from backend.app.events.model import Event
-from backend.app.events.schema import EventCreate, EventUpdate, EventStatus
-from backend.app.organizations.model import Organization
+from ..events.model import Event
+from ..events.schema import EventCreate, EventUpdate, EventStatus
+from ..organizations.model import Organization
 
 
 class EventService:

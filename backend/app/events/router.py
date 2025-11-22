@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 from typing import Optional
 
-from backend.app.database import get_db
-from backend.app.events.service import EventService
-from backend.app.events.schema import (
+from ..database import get_db
+from ..events.service import EventService
+from ..events.schema import (
     EventCreate,
     EventUpdate,
     EventInDB,
