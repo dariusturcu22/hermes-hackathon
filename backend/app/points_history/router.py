@@ -5,7 +5,6 @@ from ..database import get_db
 from . import service
 from .schema import PointsHistoryCreate, PointsHistoryRead, PointsHistoryUpdate
 
-
 router = APIRouter(prefix="/points_history", tags=["Points History"])
 
 

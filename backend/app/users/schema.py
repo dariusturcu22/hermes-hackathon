@@ -4,7 +4,7 @@ from pydantic import BaseModel, EmailStr, Field
 
 
 class UserBase(BaseModel):
-    auth0_id: str # store the "sub" claim from Auth0 JWT
+    auth0_id: str
     name: str = None
     email: str = None
     role: Literal["volunteer", "organizer"] = None

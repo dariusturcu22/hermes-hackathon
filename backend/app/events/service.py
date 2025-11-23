@@ -37,8 +37,7 @@ class EventService:
 
         out: List[EventWithOrganization] = []
         for event, org_name in results:
-            # build plain dict with only the public attributes
-            d = {
+            dict = {
                 "id": event.id,
                 "title": event.title,
                 "description": event.description,
@@ -56,7 +55,7 @@ class EventService:
                 "updated_at": event.updated_at,
                 "organization_name": org_name,
             }
-            out.append(EventWithOrganization.parse_obj(d))
+            out.append(EventWithOrganization.parse_obj(dict))
         return out
 
     @staticmethod
@@ -66,7 +65,6 @@ class EventService:
         if not org:
             raise ValueError(f"Organization id={data.organization_id} does not exist")
 
-        # explicit mapping to DB-friendly types (enums -> strings)
         payload = data.model_dump()
         payload["difficulty"] = data.difficulty
         payload["final_points"] = data.proposed_points

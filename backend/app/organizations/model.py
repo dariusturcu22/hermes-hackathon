@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, DateTime, f
 from sqlalchemy.orm import relationship
 from ..database import Base
 
+
 class Organization(Base):
     __tablename__ = 'organizations'
     id = Column(Integer, primary_key=True, autoincrement=True)

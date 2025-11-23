@@ -12,7 +12,7 @@ from ..users.service import UserService
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
-auth = VerifyToken()  # 👈 Get a new instance
+auth = VerifyToken()
 
 
 @router.get("/api/public")
@@ -28,7 +28,7 @@ def public():
 
 
 @router.get("/api/private")
-def private(auth_result: str = Security(auth.verify)):  # Use Security and the verify method to protect your endpoints
+def private(auth_result: str = Security(auth.verify)):
     """A valid access token is required to access this route"""
     return auth_result
 
@@ -37,7 +37,6 @@ def private(auth_result: str = Security(auth.verify)):  # Use Security and the v
 def signup(data: SignupRequest, db: Session = Depends(get_db)):
     """Register a new user in Auth0 AND create a local DB user"""
 
-    # 1️⃣ Call Auth0 signup endpoint
     url = f"https://{get_settings().auth0_domain}/dbconnections/signup"
     payload = {
         "client_id": get_settings().auth0_client_id,
@@ -53,12 +52,10 @@ def signup(data: SignupRequest, db: Session = Depends(get_db)):
 
     auth0_result = response.json()
 
-    # 2️⃣ Extract Auth0 user_id
     auth0_user_id = auth0_result.get("user_id") or auth0_result.get("_id")
     if not auth0_user_id:
         raise HTTPException(status_code=500, detail="Auth0 did not return a user ID")
 
-    # 3️⃣ Create local user in DB
     user_data = UserCreate(
         auth0_id=auth0_user_id,
         name=data.name if hasattr(data, "name") and data.name else data.email.split("@")[0],
@@ -70,10 +67,8 @@ def signup(data: SignupRequest, db: Session = Depends(get_db)):
     try:
         local_user = UserService.create_user(db, user_data)
     except HTTPException as e:
-        # If user already exists in DB, just return Auth0 info
         return {"success": False, "detail": str(e.detail), "auth0": auth0_result}
 
-    # 4️⃣ Return combined response
     return {
         "success": True,
         "auth0": auth0_result,

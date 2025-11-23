@@ -2,14 +2,17 @@ from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional
 
+
 class PointsHistoryBase(BaseModel):
     user_id: int
     event_id: int
     points_awarded: int
     reason: Optional[str] = None
 
+
 class PointsHistoryCreate(PointsHistoryBase):
     pass
+
 
 class PointsHistoryRead(PointsHistoryBase):
     id: int
@@ -17,6 +20,7 @@ class PointsHistoryRead(PointsHistoryBase):
 
     class Config:
         from_attributes = True
+
 
 class PointsHistoryUpdate(BaseModel):
     user_id: Optional[int] = None

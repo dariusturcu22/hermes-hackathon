@@ -20,6 +20,7 @@ You must respond with only a single integer from 1 to 10, with no explanation, n
 If the event description is incomplete or unclear, estimate conservatively based on the available information.
 """
 
+
 def get_event_points_recommendation(title, description):
     client = OpenAI(
         base_url="https://openrouter.ai/api/v1",

@@ -4,6 +4,7 @@ from sqlalchemy.sql import func
 from ..database import Base
 from ..applications.schema import ApplicationStatus
 
+
 class Application(Base):
     __tablename__ = "applications"
     id = Column(Integer, primary_key=True, autoincrement=True)

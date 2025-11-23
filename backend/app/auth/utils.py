@@ -1,15 +1,17 @@
 from typing import Optional
 
-import jwt # pip install PyJWT
+import jwt  # pip install PyJWT
 from fastapi import Depends, HTTPException, status
 from fastapi.security import SecurityScopes, HTTPAuthorizationCredentials, HTTPBearer
 
 from ..config import get_settings
 
+
 class UnauthorizedException(HTTPException):
     def __init__(self, detail: str, **kwargs):
         """Returns HTTP 403"""
         super().__init__(status.HTTP_403_FORBIDDEN, detail=detail)
+
 
 class UnauthenticatedException(HTTPException):
     def __init__(self):
@@ -18,13 +20,13 @@ class UnauthenticatedException(HTTPException):
 
 class VerifyToken:
     """Does all the token verification using PyJWT"""
-    def __init__(self):
-            self.config = get_settings()
 
-            # This gets the JWKS from a given URL and does processing so you can
-            # use any of the keys available
-            jwks_url = f'https://{self.config.auth0_domain}/.well-known/jwks.json'
-            self.jwks_client = jwt.PyJWKClient(jwks_url)
+    def __init__(self):
+        self.config = get_settings()
+        # This gets the JWKS from a given URL and does processing so you can
+        # use any of the keys available
+        jwks_url = f'https://{self.config.auth0_domain}/.well-known/jwks.json'
+        self.jwks_client = jwt.PyJWKClient(jwks_url)
 
     async def verify(self,
                      security_scopes: SecurityScopes,
