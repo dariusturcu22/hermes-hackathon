@@ -24,7 +24,7 @@ export default function LandingPage() {
             <div className="w-full lg:w-1/2 flex justify-center">
                 <div className="relative w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] lg:w-[500px] lg:h-[500px]">
                     <Image
-                        src="/landing-illustration.png"
+                        src="/landing-illustration2.png"
                         alt="Volunteering Illustration"
                         fill
                         className="object-contain"
