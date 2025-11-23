@@ -128,6 +128,7 @@ export const useAuthStore = create<AuthState>()(
                     return res.data;
                 },
 
+
                 initialize: async () => {
                     const token = get().token || localStorage.getItem("auth_token");
                     if (!token) return;
