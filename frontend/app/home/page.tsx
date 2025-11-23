@@ -4,30 +4,42 @@ import {useEffect, useState} from "react";
 import EventCard from "../components/EventCard";
 import {useEventStore} from "@/store/eventStore";
 
-
-
-function randomEventImage() {
-    const IMAGE_URLS = [
-    "https://unsplash.com/photos/pcbTJMY716o"
-]
-  return IMAGE_URLS[Math.floor(Math.random() * IMAGE_URLS.length)];
-}
-
 export default function HomePage() {
-  const events = useEventStore((state) => state.events);
-  const loading = useEventStore((state) => state.loading);
-  const fetchEvents = useEventStore((state) => state.fetchEvents);
-  const searchEventsByName = useEventStore((state) => state.searchEventsByName);
-  const [search, setSearch] = useState("");
+    const events = useEventStore((state) => state.events);
+    const loading = useEventStore((state) => state.loading);
+    const fetchEvents = useEventStore((state) => state.fetchEvents);
+    const searchEventsByName = useEventStore((state) => state.searchEventsByName);
+
+    const [search, setSearch] = useState("");
+    const [eventImages, setEventImages] = useState<{ [id: number]: string }>({});
+
+    const IMAGES = [
+        "/image1.jpg",
+        "/image2.jpg",
+        "/image3.jpg",
+        "/image4.jpg",
+        "/image5.jpg",
+    ];
 
     useEffect(() => {
         fetchEvents();
     }, [fetchEvents]);
 
+    useEffect(() => {
+        if (!events.length) return;
+
+        const assigned: { [id: number]: string } = {};
+        events.forEach((ev) => {
+            assigned[ev.id] = IMAGES[Math.floor(Math.random() * IMAGES.length)];
+        });
+
+        setEventImages(assigned);
+    }, [events]);
+
     const filtered = search ? searchEventsByName(search) : events;
 
     return (
-        <main className=" px-6 py-10 max-w-[1500px] mx-auto">
+        <main className="px-6 py-10 max-w-[1500px] mx-auto">
             <h1 className="text-3xl font-bold mb-8 pl-8">
                 Upcoming Volunteering Events
             </h1>
@@ -48,7 +60,7 @@ export default function HomePage() {
                     <EventCard
                         key={event.id}
                         {...event}
-                        image={randomEventImage()}
+                        image={eventImages[event.id]}
                     />
                 ))}
             </div>

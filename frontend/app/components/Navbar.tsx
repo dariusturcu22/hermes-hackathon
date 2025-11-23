@@ -16,6 +16,9 @@ export default function Navbar() {
     const {dark, toggleDark} = useTheme();
     const user = useAuthStore((state) => state.user);
 
+    const logout = useAuthStore((state) => state.logout);
+
+
     const [mobileOpen, setMobileOpen] = useState(false);
 
     return (
@@ -93,6 +96,9 @@ export default function Navbar() {
                                 </DropdownMenuItem>
                                 <DropdownMenuItem asChild>
                                     <Link href="/settings">Settings</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={logout}>
+                                    Logout
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
