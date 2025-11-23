@@ -10,7 +10,6 @@ export default function SignupPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    // redirect if already logged in
     useEffect(() => {
         if (user) router.push("/home");
     }, [user, router]);

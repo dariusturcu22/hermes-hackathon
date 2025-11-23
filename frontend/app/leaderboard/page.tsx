@@ -16,7 +16,6 @@ export default function LeaderboardPage() {
         console.log(users)
     }, []);
 
-    // use empty array fallback to prevent "not iterable"
     const topUsers = [...(users || [])]
         .sort((a, b) => b.total_points - a.total_points)
         .slice(0, 10);

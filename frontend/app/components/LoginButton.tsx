@@ -3,10 +3,10 @@
 import Link from "next/link";
 
 export default function LoginButton() {
-  return (
-    <Link
-       href="/login"
-      className="
+    return (
+        <Link
+            href="/login"
+            className="
         inline-flex items-center justify-center
         px-6 py-3
         rounded-xl
@@ -18,8 +18,8 @@ export default function LoginButton() {
         transition
         active:scale-95
       "
-    >
-      Log In
-    </Link>
-  );
+        >
+            Log In
+        </Link>
+    );
 }

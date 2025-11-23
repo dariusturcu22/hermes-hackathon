@@ -1,35 +1,36 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import {createContext, useContext, useEffect, useState} from "react";
 
 type ThemeContextType = {
-  dark: boolean;
-  toggleDark: () => void;
+    dark: boolean;
+    toggleDark: () => void;
 };
 
 const ThemeContext = createContext<ThemeContextType>({
-  dark: false,
-  toggleDark: () => {},
+    dark: false,
+    toggleDark: () => {
+    },
 });
 
 export function useTheme() {
-  return useContext(ThemeContext);
+    return useContext(ThemeContext);
 }
 
-export default function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [dark, setDark] = useState(false);
+export default function ThemeProvider({children}: { children: React.ReactNode }) {
+    const [dark, setDark] = useState(false);
 
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", dark);
-  }, [dark]);
+    useEffect(() => {
+        document.documentElement.classList.toggle("dark", dark);
+    }, [dark]);
 
-  function toggleDark() {
-    setDark((prev) => !prev);
-  }
+    function toggleDark() {
+        setDark((prev) => !prev);
+    }
 
-  return (
-    <ThemeContext.Provider value={{ dark, toggleDark }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+    return (
+        <ThemeContext.Provider value={{dark, toggleDark}}>
+            {children}
+        </ThemeContext.Provider>
+    );
 }

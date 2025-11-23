@@ -30,7 +30,7 @@ export default function EventCard({
 
     return (
         <Link
-            href={`/event/${id}`} // use event ID for the page
+            href={`/event/${id}`}
             className="
         block w-full max-w-[450px] lg:max-w-[480px] mx-auto
         rounded-2xl overflow-hidden bg-white dark:bg-gray-900

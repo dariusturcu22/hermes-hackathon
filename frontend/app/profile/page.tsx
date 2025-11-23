@@ -9,7 +9,7 @@ export default function ProfilePage() {
     const initialize = useAuthStore((state) => state.initialize);
 
     useEffect(() => {
-        initialize(); // loads the current user if token exists
+        initialize();
     }, [initialize]);
 
     if (!user)

@@ -3,8 +3,6 @@ import {devtools, persist} from "zustand/middleware";
 import axios, {AxiosError} from "axios";
 import {toast} from "react-hot-toast";
 
-// --- Types ---
-
 export interface User {
     id: number;
     auth0_id: string;
@@ -70,7 +68,6 @@ interface AuthState {
 
 const API_BASE = "http://localhost:8000";
 
-// --- Store ---
 
 export const useAuthStore = create<AuthState>()(
     devtools(
@@ -155,7 +152,6 @@ export const useAuthStore = create<AuthState>()(
     )
 );
 
-// --- Helper for error handling ---
 function handleAuthError(err: unknown, set: any, fallbackMessage = "Signup failed") {
     if (axios.isAxiosError(err) && err.response?.data) {
         const data = err.response.data as Auth0Error;

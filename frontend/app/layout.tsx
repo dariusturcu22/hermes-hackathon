@@ -26,13 +26,13 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
     return (
         <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-            <Providers>
-                <Navbar/>
-                <div className="pt-20">
-                    <Toaster position="bottom-center" reverseOrder={false}/>
-                    {children}
-                </div>
-            </Providers>
+        <Providers>
+            <Navbar/>
+            <div className="pt-20">
+                <Toaster position="bottom-center" reverseOrder={false}/>
+                {children}
+            </div>
+        </Providers>
         </body>
         </html>
     );

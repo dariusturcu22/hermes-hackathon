@@ -11,12 +11,10 @@ export default function LandingPage() {
     const router = useRouter();
     const user = useAuthStore((state) => state.user);
 
-    // Redirect logged-in users immediately
     useEffect(() => {
         if (user) router.push("/home");
     }, [user, router]);
 
-    // Optional: render nothing while redirecting
     if (user) return null;
 
     return (

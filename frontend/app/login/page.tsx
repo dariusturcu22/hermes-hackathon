@@ -10,10 +10,8 @@ export default function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    // redirect immediately if user exists
     if (user) {
         router.push("/home");
-        return null; // render nothing while redirecting
     }
 
     const handleSubmit = async (e: FormEvent) => {
@@ -22,7 +20,6 @@ export default function LoginPage() {
             await login({username: email, password});
             router.push("/home");
         } catch {
-            // errors already handled via toast in store
         }
     };
 

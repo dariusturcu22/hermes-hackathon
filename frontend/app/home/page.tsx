@@ -33,6 +33,7 @@ export default function HomePage() {
             assigned[ev.id] = IMAGES[Math.floor(Math.random() * IMAGES.length)];
         });
 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setEventImages(assigned);
     }, [events]);
 
