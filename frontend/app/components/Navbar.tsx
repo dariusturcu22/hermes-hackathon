@@ -51,7 +51,7 @@ export default function Navbar() {
                     <Link
                         href="/leaderboard"
                         className="flex items-center gap-2 transition lg:px-5 lg:py-3 lg:rounded-xl lg:border
-              lg:border-white/20 lg:bg-white/8 lg:backdrop-blur-xl hover:lg:bg-white/20"
+              lg:border-white/20 lg:bg-gray/8 lg:backdrop-blur-xl hover:lg:bg-white/20"
                     >
                         <Trophy className="w-8 h-8 lg:w-6 lg:h-6"/>
                         <span className="text-sm font-medium hidden lg:block">Leaderboard</span>
