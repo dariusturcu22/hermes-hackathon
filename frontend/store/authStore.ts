@@ -158,7 +158,6 @@ function handleAuthError(err: unknown, set: any, fallbackMessage = "Signup faile
         const data = err.response.data as Auth0Error;
 
         if (data.description?.rules) {
-            // show first failing rule
             const failingRule = data.description.rules.find((r) => !r.verified);
             if (failingRule) toast.error(failingRule.message);
             set({error: "Password requirements not met"});
