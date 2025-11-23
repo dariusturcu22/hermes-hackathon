@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import ThemeProvider from "./ThemeProvider";
 import {Toaster} from "react-hot-toast";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import Providers from "@/app/Providers";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -24,16 +26,13 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
     return (
         <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <ThemeProvider>
-
-            <Navbar/>
-
-            {/* SPAȚIU SUB NAVBAR (foarte important!) */}
-            <div className="pt-20">
-                <Toaster position="bottom-center" reverseOrder={false}/>
-                {children}
-            </div>
-        </ThemeProvider>
+            <Providers>
+                <Navbar/>
+                <div className="pt-20">
+                    <Toaster position="bottom-center" reverseOrder={false}/>
+                    {children}
+                </div>
+            </Providers>
         </body>
         </html>
     );

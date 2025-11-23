@@ -1,4 +1,3 @@
-// store/users.ts
 import {create} from "zustand";
 import axios from "axios";
 
@@ -26,7 +25,7 @@ export const useUserStore = create<UserStore>((set) => ({
     fetchUsers: async () => {
         set({loading: true, error: null});
         try {
-            const res = await axios.get("http://127.0.0.1:8000/users/"); // full URL
+            const res = await axios.get("http://localhost:8000/users");
             set({users: res.data.data, loading: false});
         } catch (err: any) {
             set({error: err.message, loading: false});

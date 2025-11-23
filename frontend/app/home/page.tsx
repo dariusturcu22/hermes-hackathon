@@ -4,9 +4,21 @@ import {useEffect, useState} from "react";
 import EventCard from "../components/EventCard";
 import {useEventStore} from "@/store/eventStore";
 
+
+
+function randomEventImage() {
+    const IMAGE_URLS = [
+    "https://unsplash.com/photos/pcbTJMY716o"
+]
+  return IMAGE_URLS[Math.floor(Math.random() * IMAGE_URLS.length)];
+}
+
 export default function HomePage() {
-    const {events, loading, fetchEvents, searchEventsByName} = useEventStore();
-    const [search, setSearch] = useState("");
+  const events = useEventStore((state) => state.events);
+  const loading = useEventStore((state) => state.loading);
+  const fetchEvents = useEventStore((state) => state.fetchEvents);
+  const searchEventsByName = useEventStore((state) => state.searchEventsByName);
+  const [search, setSearch] = useState("");
 
     useEffect(() => {
         fetchEvents();
@@ -36,7 +48,7 @@ export default function HomePage() {
                     <EventCard
                         key={event.id}
                         {...event}
-                        image={"/placeholder.jpg"}
+                        image={randomEventImage()}
                     />
                 ))}
             </div>

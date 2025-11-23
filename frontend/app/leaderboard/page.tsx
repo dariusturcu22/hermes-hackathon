@@ -6,11 +6,15 @@ import UserEntry from "./UserEntry";
 import {useUserStore} from "@/store/userStore";
 
 export default function LeaderboardPage() {
-    const {users, fetchUsers, loading, error} = useUserStore();
+    const users = useUserStore((state) => state.users);
+    const loading = useUserStore((state) => state.loading);
+    const fetchUsers = useUserStore((state) => state.fetchUsers);
+    const error = useUserStore((state) => state.error);
 
     useEffect(() => {
         fetchUsers();
-    }, [fetchUsers]);
+        console.log(users)
+    }, []);
 
     // use empty array fallback to prevent "not iterable"
     const topUsers = [...(users || [])]
